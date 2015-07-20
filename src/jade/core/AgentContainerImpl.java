@@ -48,6 +48,12 @@ import jade.security.CredentialsHelper;
 import jade.security.JADEPrincipal;
 import jade.security.Credentials;
 
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+
 
 /**
  This class is a concrete implementation of the JADE agent
@@ -128,13 +134,27 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 	private boolean joined;
 	private boolean verboseShutdown;
 
+	private PrintWriter sendPacketsLogger;
+
 	// Default constructor
 	AgentContainerImpl() {
+		try {
+			sendPacketsLogger = new PrintWriter("send_packets.log", "UTF-8");
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String formattedDate = sdf.format(date);
+			sendPacketsLogger.println("-----------------------------------------------------------");
+			sendPacketsLogger.println("- Started Logging @ " + formattedDate);
+			sendPacketsLogger.println("-----------------------------------------------------------");
+		} catch(Exception e){
+			System.out.println("Failed to create logfile.");
+		}
 	}
 
 	// Package scoped constructor, so that only the Runtime
 	// class can actually create a new Agent Container.
 	AgentContainerImpl(Profile p) {
+		this();
 		myProfile = p;
 		((ProfileImpl) myProfile).init();
 		localAgents = new LADT(16);
@@ -717,6 +737,10 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 	 Issue a SEND_MESSAGE VerticalCommand for each receiver
 	 */
 	public void handleSend(ACLMessage msg, AID sender, boolean needClone) {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
+		sendPacketsLogger.println(sdf.format(date) + "\n" + msg);
+		sendPacketsLogger.flush();
 		Iterator it = msg.getAllIntendedReceiver();
 		// If there are multiple receivers the message must always be cloned
 		// since the MessageManager will modify it. If there is a single 
