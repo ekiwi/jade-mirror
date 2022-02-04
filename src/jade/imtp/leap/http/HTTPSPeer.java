@@ -1,6 +1,6 @@
 package jade.imtp.leap.http;
 
-//#J2ME_EXCLUDE_FILE
+// #J2ME_EXCLUDE_FILE
 
 import jade.imtp.leap.JICP.Connection;
 import jade.imtp.leap.JICP.ConnectionFactory;
@@ -17,24 +17,23 @@ import java.net.Socket;
  */
 public class HTTPSPeer extends JICPSPeer {
 
-    @Override
-    public ConnectionFactory getConnectionFactory() {
-        return new ConnectionFactory() {
+  @Override
+  public ConnectionFactory getConnectionFactory() {
+    return new ConnectionFactory() {
 
-            public Connection createConnection(Socket s) {
-                return new HTTPServerConnection(s);
-            }
+      public Connection createConnection(Socket s) {
+        return new HTTPServerConnection(s);
+      }
 
-            public Connection createConnection(TransportAddress ta) throws IOException {
-                return new HTTPSClientConnection(ta);
-            }
-        };
-    }
+      public Connection createConnection(TransportAddress ta) throws IOException {
+        return new HTTPSClientConnection(ta);
+      }
+    };
+  }
 
-    @Override
-    public TransportProtocol getProtocol() {
-        return HTTPSProtocol.getInstance();
-    }
+  @Override
+  public TransportProtocol getProtocol() {
+    return HTTPSProtocol.getInstance();
+  }
 
-    
 }

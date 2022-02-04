@@ -1,6 +1,6 @@
 package jade.imtp.leap.http;
 
-//#J2ME_EXCLUDE_FILE
+// #J2ME_EXCLUDE_FILE
 
 import jade.imtp.leap.ICPException;
 import jade.mtp.TransportAddress;
@@ -15,12 +15,12 @@ public class HTTPSProtocol extends HTTPProtocol {
    * The protocol's name, as used in a URL protocol field.
    */
   public static final String NAME = "https";
-  public static final int    DEFAULT_PORT = 443;
+  public static final int DEFAULT_PORT = 443;
 
   private static HTTPSProtocol theInstance = new HTTPSProtocol();
 
   public static HTTPSProtocol getInstance() {
-  	return theInstance;
+    return theInstance;
   }
 
   /**
@@ -32,13 +32,13 @@ public class HTTPSProtocol extends HTTPProtocol {
 
     try {
       hta = (HTTPSAddress) ta;
-    }
-    catch (ClassCastException cce) {
-      throw new ICPException("The TransportAddress "+ta.toString()+" is not an HTTPS Address");
+    } catch (ClassCastException cce) {
+      throw new ICPException("The TransportAddress " + ta.toString() + " is not an HTTPS Address");
     }
 
     return hta.toString();
   }
+
   /**
    */
   public TransportAddress buildAddress(String host, String port, String file, String anchor) {

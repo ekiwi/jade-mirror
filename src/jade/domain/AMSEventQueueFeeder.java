@@ -1,8 +1,8 @@
 package jade.domain;
 
-//#APIDOC_EXCLUDE_FILE
-//#MIDP_EXCLUDE_FILE
+// #APIDOC_EXCLUDE_FILE
 
+// #MIDP_EXCLUDE_FILE
 
 import java.util.Date;
 
@@ -31,233 +31,234 @@ import jade.domain.introspection.ThawedAgent;
 import jade.util.InputQueue;
 
 public class AMSEventQueueFeeder implements AgentManager.Listener {
-	private InputQueue eventQueue;
-	private Location localContainer;
-	private ams theAms;
+  private InputQueue eventQueue;
+  private Location localContainer;
+  private ams theAms;
 
-	public AMSEventQueueFeeder(InputQueue eventQueue, Location localContainer) {
-		this.eventQueue = eventQueue;
-		this.localContainer = localContainer;
-	}
+  public AMSEventQueueFeeder(InputQueue eventQueue, Location localContainer) {
+    this.eventQueue = eventQueue;
+    this.localContainer = localContainer;
+  }
 
-	public InputQueue getQueue() {
-		return eventQueue;
-	}
-	
-	void setAms(ams ams) {
-		theAms = ams;
-		// Generate a PlatformDescription event in case some AddedMTP or RemovedMTP event happened when the AMS was not yet initialized
-		PlatformDescription ap = new PlatformDescription();
-		ap.setPlatform(theAms.getDescriptionAction(null));
-		EventRecord er = new EventRecord(ap, localContainer);
-		er.setWhen(new Date());
-		eventQueue.put(er);
-	}
+  public InputQueue getQueue() {
+    return eventQueue;
+  }
 
-	public void bornAgent(PlatformEvent ev) {
-		ContainerID cid = ev.getContainer();
-		AID agentID = ev.getAgent();
-		String ownership = ev.getNewOwnership();
+  void setAms(ams ams) {
+    theAms = ams;
+    // Generate a PlatformDescription event in case some AddedMTP or RemovedMTP
+    // event happened when the AMS was not yet initialized
+    PlatformDescription ap = new PlatformDescription();
+    ap.setPlatform(theAms.getDescriptionAction(null));
+    EventRecord er = new EventRecord(ap, localContainer);
+    er.setWhen(new Date());
+    eventQueue.put(er);
+  }
 
-		BornAgent ba = new BornAgent();
-		ba.setAgent(agentID);
-		ba.setWhere(cid);
-		ba.setState(AMSAgentDescription.ACTIVE);
-		ba.setOwnership(ownership);
-		ba.setClassName((String) agentID.getAllUserDefinedSlot().get(AID.AGENT_CLASSNAME));
+  public void bornAgent(PlatformEvent ev) {
+    ContainerID cid = ev.getContainer();
+    AID agentID = ev.getAgent();
+    String ownership = ev.getNewOwnership();
 
-		EventRecord er = new EventRecord(ba, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
-	}
+    BornAgent ba = new BornAgent();
+    ba.setAgent(agentID);
+    ba.setWhere(cid);
+    ba.setState(AMSAgentDescription.ACTIVE);
+    ba.setOwnership(ownership);
+    ba.setClassName((String) agentID.getAllUserDefinedSlot().get(AID.AGENT_CLASSNAME));
 
-	public void deadAgent(PlatformEvent ev) {
-		ContainerID cid = ev.getContainer();
-		AID agentID = ev.getAgent();
+    EventRecord er = new EventRecord(ba, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
+  }
 
-		DeadAgent da = new DeadAgent();
-		da.setAgent(agentID);
-		da.setWhere(cid);
-		if (ev.getContainerRemoved()) {
-			da.setContainerRemoved(new Boolean(true));
-		}
+  public void deadAgent(PlatformEvent ev) {
+    ContainerID cid = ev.getContainer();
+    AID agentID = ev.getAgent();
 
-		EventRecord er = new EventRecord(da, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
-	}
+    DeadAgent da = new DeadAgent();
+    da.setAgent(agentID);
+    da.setWhere(cid);
+    if (ev.getContainerRemoved()) {
+      da.setContainerRemoved(new Boolean(true));
+    }
 
-	public void suspendedAgent(PlatformEvent ev) {
-		ContainerID cid = ev.getContainer();
-		AID name = ev.getAgent();
+    EventRecord er = new EventRecord(da, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
+  }
 
-		SuspendedAgent sa = new SuspendedAgent();
-		sa.setAgent(name);
-		sa.setWhere(cid);
+  public void suspendedAgent(PlatformEvent ev) {
+    ContainerID cid = ev.getContainer();
+    AID name = ev.getAgent();
 
-		EventRecord er = new EventRecord(sa, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
-	}
+    SuspendedAgent sa = new SuspendedAgent();
+    sa.setAgent(name);
+    sa.setWhere(cid);
 
-	public void resumedAgent(PlatformEvent ev) {
-		ContainerID cid = ev.getContainer();
-		AID name = ev.getAgent();
+    EventRecord er = new EventRecord(sa, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
+  }
 
-		ResumedAgent ra = new ResumedAgent();
-		ra.setAgent(name);
-		ra.setWhere(cid);
+  public void resumedAgent(PlatformEvent ev) {
+    ContainerID cid = ev.getContainer();
+    AID name = ev.getAgent();
 
-		EventRecord er = new EventRecord(ra, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
-	}
+    ResumedAgent ra = new ResumedAgent();
+    ra.setAgent(name);
+    ra.setWhere(cid);
 
-	public void frozenAgent(PlatformEvent ev) {
-		ContainerID cid = ev.getContainer();
-		AID name = ev.getAgent();
-		ContainerID bufferContainer = ev.getNewContainer();
+    EventRecord er = new EventRecord(ra, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
+  }
 
-		FrozenAgent fa = new FrozenAgent();
-		fa.setAgent(name);
-		fa.setWhere(cid);
-		fa.setBufferContainer(bufferContainer);
+  public void frozenAgent(PlatformEvent ev) {
+    ContainerID cid = ev.getContainer();
+    AID name = ev.getAgent();
+    ContainerID bufferContainer = ev.getNewContainer();
 
-		EventRecord er = new EventRecord(fa, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
-	}
+    FrozenAgent fa = new FrozenAgent();
+    fa.setAgent(name);
+    fa.setWhere(cid);
+    fa.setBufferContainer(bufferContainer);
 
-	public void thawedAgent(PlatformEvent ev) {
-		ContainerID cid = ev.getContainer();
-		AID name = ev.getAgent();
-		ContainerID bufferContainer = ev.getNewContainer();
+    EventRecord er = new EventRecord(fa, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
+  }
 
-		ThawedAgent ta = new ThawedAgent();
-		ta.setAgent(name);
-		ta.setWhere(cid);
-		ta.setBufferContainer(bufferContainer);
+  public void thawedAgent(PlatformEvent ev) {
+    ContainerID cid = ev.getContainer();
+    AID name = ev.getAgent();
+    ContainerID bufferContainer = ev.getNewContainer();
 
-		EventRecord er = new EventRecord(ta, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
-	}
+    ThawedAgent ta = new ThawedAgent();
+    ta.setAgent(name);
+    ta.setWhere(cid);
+    ta.setBufferContainer(bufferContainer);
 
-	public void movedAgent(PlatformEvent ev) {
-		ContainerID from = ev.getContainer();
-		ContainerID to = ev.getNewContainer();
-		AID agentID = ev.getAgent();
+    EventRecord er = new EventRecord(ta, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
+  }
 
-		MovedAgent ma = new MovedAgent();
-		ma.setAgent(agentID);
-		ma.setFrom(from);
-		ma.setTo(to);
+  public void movedAgent(PlatformEvent ev) {
+    ContainerID from = ev.getContainer();
+    ContainerID to = ev.getNewContainer();
+    AID agentID = ev.getAgent();
 
-		EventRecord er = new EventRecord(ma, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
-	}
+    MovedAgent ma = new MovedAgent();
+    ma.setAgent(agentID);
+    ma.setFrom(from);
+    ma.setTo(to);
 
-	public void changedAgentPrincipal(PlatformEvent ev) {
-		ContainerID cid = ev.getContainer();
-		AID name = ev.getAgent();
+    EventRecord er = new EventRecord(ma, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
+  }
 
-		ChangedAgentOwnership cao = new ChangedAgentOwnership();
-		cao.setAgent(name);
-		cao.setWhere(cid);
-		cao.setFrom(ev.getOldOwnership());
-		cao.setTo(ev.getNewOwnership());
+  public void changedAgentPrincipal(PlatformEvent ev) {
+    ContainerID cid = ev.getContainer();
+    AID name = ev.getAgent();
 
-		EventRecord er = new EventRecord(cao, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
-	}
+    ChangedAgentOwnership cao = new ChangedAgentOwnership();
+    cao.setAgent(name);
+    cao.setWhere(cid);
+    cao.setFrom(ev.getOldOwnership());
+    cao.setTo(ev.getNewOwnership());
 
-	public void addedContainer(PlatformEvent ev) {
-		ContainerID cid = ev.getContainer();
-		String name = cid.getName();
+    EventRecord er = new EventRecord(cao, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
+  }
 
-		AddedContainer ac = new AddedContainer();
-		ac.setContainer(cid);
+  public void addedContainer(PlatformEvent ev) {
+    ContainerID cid = ev.getContainer();
+    String name = cid.getName();
 
-		EventRecord er = new EventRecord(ac, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
-	}
+    AddedContainer ac = new AddedContainer();
+    ac.setContainer(cid);
 
-	public void removedContainer(PlatformEvent ev) {
-		ContainerID cid = ev.getContainer();
-		String name = cid.getName();
+    EventRecord er = new EventRecord(ac, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
+  }
 
-		RemovedContainer rc = new RemovedContainer();
-		rc.setContainer(cid);
+  public void removedContainer(PlatformEvent ev) {
+    ContainerID cid = ev.getContainer();
+    String name = cid.getName();
 
-		EventRecord er = new EventRecord(rc, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
-	}
+    RemovedContainer rc = new RemovedContainer();
+    rc.setContainer(cid);
 
-	public synchronized void changedContainerPrincipal(PlatformEvent ev) {
-		// FIXME: There is no element in the IntrospectionOntology
-		// corresponding to this event
-	}
+    EventRecord er = new EventRecord(rc, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
+  }
 
-	public synchronized void addedMTP(MTPEvent ev) {
-		Channel ch = ev.getChannel();
-		ContainerID cid = ev.getPlace();
-		String proto = ch.getProtocol();
-		String address = ch.getAddress();
+  public synchronized void changedContainerPrincipal(PlatformEvent ev) {
+    // FIXME: There is no element in the IntrospectionOntology
+    // corresponding to this event
+  }
 
-		// Generate a suitable AMS event
-		AddedMTP amtp = new AddedMTP();
-		amtp.setAddress(address);
-		amtp.setProto(proto);
-		amtp.setWhere(cid);
+  public synchronized void addedMTP(MTPEvent ev) {
+    Channel ch = ev.getChannel();
+    ContainerID cid = ev.getPlace();
+    String proto = ch.getProtocol();
+    String address = ch.getAddress();
 
-		EventRecord er = new EventRecord(amtp, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
+    // Generate a suitable AMS event
+    AddedMTP amtp = new AddedMTP();
+    amtp.setAddress(address);
+    amtp.setProto(proto);
+    amtp.setWhere(cid);
 
-		if (theAms != null) {
-			// The PlatformDescription has changed --> Generate a suitable event
-			PlatformDescription ap = new PlatformDescription();
-			ap.setPlatform(theAms.getDescriptionAction(null));
-			er = new EventRecord(ap, localContainer);
-			er.setWhen(ev.getTime());
-			eventQueue.put(er);
-		}
-	}
+    EventRecord er = new EventRecord(amtp, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
 
-	public synchronized void removedMTP(MTPEvent ev) {
-		Channel ch = ev.getChannel();
-		ContainerID cid = ev.getPlace();
-		String proto = ch.getProtocol();
-		String address = ch.getAddress();
+    if (theAms != null) {
+      // The PlatformDescription has changed --> Generate a suitable event
+      PlatformDescription ap = new PlatformDescription();
+      ap.setPlatform(theAms.getDescriptionAction(null));
+      er = new EventRecord(ap, localContainer);
+      er.setWhen(ev.getTime());
+      eventQueue.put(er);
+    }
+  }
 
-		RemovedMTP rmtp = new RemovedMTP();
-		rmtp.setAddress(address);
-		rmtp.setProto(proto);
-		rmtp.setWhere(cid);
+  public synchronized void removedMTP(MTPEvent ev) {
+    Channel ch = ev.getChannel();
+    ContainerID cid = ev.getPlace();
+    String proto = ch.getProtocol();
+    String address = ch.getAddress();
 
-		EventRecord er = new EventRecord(rmtp, localContainer);
-		er.setWhen(ev.getTime());
-		eventQueue.put(er);
+    RemovedMTP rmtp = new RemovedMTP();
+    rmtp.setAddress(address);
+    rmtp.setProto(proto);
+    rmtp.setWhere(cid);
 
-		if (theAms != null) {
-			// The PlatformDescription has changed --> Generate a suitable event
-			PlatformDescription ap = new PlatformDescription();
-			ap.setPlatform(theAms.getDescriptionAction(null));
-			er = new EventRecord(ap, localContainer);
-			er.setWhen(ev.getTime());
-			eventQueue.put(er);
-		}
-	}
+    EventRecord er = new EventRecord(rmtp, localContainer);
+    er.setWhen(ev.getTime());
+    eventQueue.put(er);
 
-	public void messageIn(MTPEvent ev) {
-		// No AMS event corresponds to this MTPEvent --> Just do nothing
-	}
+    if (theAms != null) {
+      // The PlatformDescription has changed --> Generate a suitable event
+      PlatformDescription ap = new PlatformDescription();
+      ap.setPlatform(theAms.getDescriptionAction(null));
+      er = new EventRecord(ap, localContainer);
+      er.setWhen(ev.getTime());
+      eventQueue.put(er);
+    }
+  }
 
-	public void messageOut(MTPEvent ev) {
-		// No AMS event corresponds to this MTPEvent --> Just do nothing
-	}
+  public void messageIn(MTPEvent ev) {
+    // No AMS event corresponds to this MTPEvent --> Just do nothing
+  }
+
+  public void messageOut(MTPEvent ev) {
+    // No AMS event corresponds to this MTPEvent --> Just do nothing
+  }
 }

@@ -1,28 +1,24 @@
 /******************************************************************
- * JADE - Java Agent DEvelopment Framework is a framework to develop
- * multi-agent systems in compliance with the FIPA specifications.
- * Copyright (C) 2002 TILAB S.p.A.
+ * JADE - Java Agent DEvelopment Framework is a framework to develop multi-agent systems in
+ * compliance with the FIPA specifications. Copyright (C) 2002 TILAB S.p.A.
  *
  * This file is donated by Acklin B.V. to the JADE project.
  *
  *
  * GNU Lesser General Public License
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation,
- * version 2.1 of the License.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, version 2.1 of
+ * the License.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA  02111-1307, USA.
- * ***************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ ***************************************************************/
 package jade.tools.gui;
 
 import java.awt.Color;
@@ -37,10 +33,10 @@ import jade.domain.FIPAAgentManagement.Envelope;
 import jade.lang.acl.ACLMessage;
 
 /**
- *  This class displays a single string from an ACLMessage
+ * This class displays a single string from an ACLMessage
  *
- * @author     Chris van Aart - Acklin B.V., the Netherlands
- * @created    April 26, 2002
+ * @author Chris van Aart - Acklin B.V., the Netherlands
+ * @created April 26, 2002
  */
 
 public class ACLTextField extends JTextField implements Observer {
@@ -50,12 +46,11 @@ public class ACLTextField extends JTextField implements Observer {
     super.setEnabled(theBool);
   }
 
-
   /**
-   *  register an ACLMessage with the accompagnied membername
+   * register an ACLMessage with the accompagnied membername
    *
-   * @param  arg        the ACLMessage
-   * @param  fieldName  membername of the ACLMessage
+   * @param arg the ACLMessage
+   * @param fieldName membername of the ACLMessage
    */
   public void register(Object arg, String fieldName) {
     UIManager.put("TextField.disabledForeground", Color.black);
@@ -74,74 +69,67 @@ public class ACLTextField extends JTextField implements Observer {
     String theType = "java.lang.String";
     try {
       Method sn = theObj.getClass().getMethod(methodName, (Class[]) null);
-      Object res = sn.invoke(theObj, new Object[]{});
+      Object res = sn.invoke(theObj, new Object[] {});
       setText(res != null ? res.toString() : "");
-    }
-    catch (Exception ex) {
-      jade.util.Logger.getMyLogger(this.getClass().getName()).log(jade.util.Logger.WARNING,"failed class: " + theObj.getClass() + " for " + methodName);
+    } catch (Exception ex) {
+      jade.util.Logger.getMyLogger(this.getClass().getName()).log(jade.util.Logger.WARNING,
+          "failed class: " + theObj.getClass() + " for " + methodName);
       ex.printStackTrace();
     }
 
   }
 
-
   /**
-   *  unregister ACLMessage
+   * unregister ACLMessage
    *
-   * @param  arg  the ACLMessage
-   * @param  str  Description of Parameter
+   * @param arg the ACLMessage
+   * @param str Description of Parameter
    */
   public void unregister(Object arg, String str) {
 
   }
 
-
   /**
-   *  update textField
+   * update textField
    *
-   * @param  ob   the object
-   * @param  arg  the argument
+   * @param ob the object
+   * @param arg the argument
    */
   public void update(Observable ob, Object arg) {
     String methodName = "get" + fieldName;
     String theType = "java.lang.String";
     try {
       Method sn = theObj.getClass().getMethod(methodName, (Class[]) null);
-      Object res = sn.invoke(theObj, new Object[]{});
+      Object res = sn.invoke(theObj, new Object[] {});
       setText(res != null ? res.toString() : "");
-    }
-    catch (Exception ex) {
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
 
   }
 
-
   /**
-   *  triggered when focus lossed
+   * triggered when focus lossed
    *
-   * @param  e  the FocusEvent
+   * @param e the FocusEvent
    */
   public void focusLost(FocusEvent e) {
     String value = getText();
     String methodName = "set" + fieldName;
     String theType = "java.lang.String";
     try {
-      Method sn = theObj.getClass().getMethod(methodName, new Class[]{Class.forName(theType)});
+      Method sn = theObj.getClass().getMethod(methodName, new Class[] {Class.forName(theType)});
       Object os = value;
-      sn.invoke(theObj, new Object[]{os});
-    }
-    catch (Exception ex) {
+      sn.invoke(theObj, new Object[] {os});
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
   }
 
-
-
   /**
-   *  processFocusEvent listener
+   * processFocusEvent listener
    *
-   * @param  e  the FocusEvent
+   * @param e the FocusEvent
    */
   protected void processFocusEvent(FocusEvent e) {
     super.processFocusEvent(e);
@@ -151,9 +139,7 @@ public class ACLTextField extends JTextField implements Observer {
 
   }
 
-
-
   private Object theObj;
   private String fieldName;
 }
-//  ***EOF***
+// ***EOF***

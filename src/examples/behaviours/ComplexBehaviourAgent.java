@@ -1,26 +1,21 @@
 /**
- * ***************************************************************
- * JADE - Java Agent DEvelopment Framework is a framework to develop
- * multi-agent systems in compliance with the FIPA specifications.
- * Copyright (C) 2000 CSELT S.p.A.
+ * *************************************************************** JADE - Java Agent DEvelopment
+ * Framework is a framework to develop multi-agent systems in compliance with the FIPA
+ * specifications. Copyright (C) 2000 CSELT S.p.A.
  * 
  * GNU Lesser General Public License
  * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation,
- * version 2.1 of the License.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, version 2.1 of
+ * the License.
  * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA  02111-1307, USA.
- * **************************************************************
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA. **************************************************************
  */
 package examples.behaviours;
 
@@ -30,11 +25,11 @@ import jade.core.behaviours.SequentialBehaviour;
 import jade.core.behaviours.Behaviour;
 
 /**
- * This is an example of recursive aggregation of composite agent behaviours.
- * A composite behaviour is created, composed of some Sequential Behaviours,
- * and OneShot behaviours.
+ * This is an example of recursive aggregation of composite agent behaviours. A composite behaviour
+ * is created, composed of some Sequential Behaviours, and OneShot behaviours.
+ * 
  * @author Giovanni Rimassa - Universita di Parma
- * @version  $Date$ $Revision$
+ * @version $Date$ $Revision$
  */
 public class ComplexBehaviourAgent extends Agent {
   class SingleStepBehaviour extends OneShotBehaviour {
@@ -46,8 +41,8 @@ public class ComplexBehaviourAgent extends Agent {
     }
 
     public void action() {
-      System.out.println("Agent "+getName()+": Step "+myStep);
-    } 
+      System.out.println("Agent " + getName() + ": Step " + myStep);
+    }
 
   }
 
@@ -56,7 +51,7 @@ public class ComplexBehaviourAgent extends Agent {
       public int onEnd() {
         reset();
         return super.onEnd();
-      } 
+      }
 
     };
     SequentialBehaviour myBehaviour2 = new SequentialBehaviour(this);
@@ -82,6 +77,5 @@ public class ComplexBehaviourAgent extends Agent {
     myBehaviour2.addSubBehaviour(new SingleStepBehaviour(this, "2.5"));
     addBehaviour(myBehaviour1);
     addBehaviour(myBehaviour2);
-  } 
+  }
 }
-

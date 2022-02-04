@@ -1,28 +1,24 @@
 /******************************************************************
- * JADE - Java Agent DEvelopment Framework is a framework to develop
- * multi-agent systems in compliance with the FIPA specifications.
- * Copyright (C) 2002 TILAB S.p.A.
+ * JADE - Java Agent DEvelopment Framework is a framework to develop multi-agent systems in
+ * compliance with the FIPA specifications. Copyright (C) 2002 TILAB S.p.A.
  *
  * This file is donated by Acklin B.V. to the JADE project.
  *
  *
  * GNU Lesser General Public License
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation,
- * version 2.1 of the License.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, version 2.1 of
+ * the License.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA  02111-1307, USA.
- * ***************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ ***************************************************************/
 package jade.tools.testagent;
 
 import java.awt.*;
@@ -44,31 +40,29 @@ import jade.lang.acl.*;
 import jade.content.lang.sl.*;
 import jade.util.Logger;
 
-
 /**
- *  This can be used as test agent for sending and receiving messages to
- *  the Agentplatform and Other agents.
- *  A couple of message templates are included in the menu.
+ * This can be used as test agent for sending and receiving messages to the Agentplatform and Other
+ * agents. A couple of message templates are included in the menu.
  *
- * @author     Chris van Aart - Acklin B.V., the Netherlands
- * @created    May 6, 2002
+ * @author Chris van Aart - Acklin B.V., the Netherlands
+ * @created May 6, 2002
  */
 
 public class TestAgent extends Agent {
-  
+
   private static Logger logger = Logger.getMyLogger(TestAgent.class.getName());
+
   /**
-   *  Constructor for the TestAgent
+   * Constructor for the TestAgent
    */
   public TestAgent() {
     super();
   }
 
-
   /**
-   *  The main program for the TestAgent class
+   * The main program for the TestAgent class
    *
-   * @param  args  The command line arguments
+   * @param args The command line arguments
    */
   public static void main(String[] args) {
     String host = "cross.hq.acklin.nl";
@@ -76,11 +70,10 @@ public class TestAgent extends Agent {
     jade.Boot3.main(argsv);
   }
 
-
   /**
-   *  Gets the PlatformRequest attribute of the TestAgent object
+   * Gets the PlatformRequest attribute of the TestAgent object
    *
-   * @return    The PlatformRequest value
+   * @return The PlatformRequest value
    */
   public ACLMessage getPlatformRequest() {
     ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
@@ -94,9 +87,8 @@ public class TestAgent extends Agent {
     return msg;
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    */
   public void doRegisterAMS() {
 
@@ -110,7 +102,6 @@ public class TestAgent extends Agent {
     ACLMessage msg = createRequestMessage(this, this.getAMS(), register);
     itsFrame.setItsMsg(msg);
   }
-
 
   public void doRegisterDF() {
 
@@ -132,7 +123,6 @@ public class TestAgent extends Agent {
     itsFrame.setItsMsg(msg);
   }
 
-
   public void doDeregisterDF() {
     DFAgentDescription dFAgentDescription = new DFAgentDescription();
     dFAgentDescription.setName(getAID());
@@ -142,7 +132,6 @@ public class TestAgent extends Agent {
     ACLMessage msg = createRequestMessage(this, getDefaultDF(), deregister);
     itsFrame.setItsMsg(msg);
   }
-
 
   public void doDeRegisterAMS() {
 
@@ -154,7 +143,6 @@ public class TestAgent extends Agent {
     ACLMessage msg = createRequestMessage(this, getAMS(), deregister);
     itsFrame.setItsMsg(msg);
   }
-
 
   public void doSearchAMS() {
 
@@ -170,7 +158,6 @@ public class TestAgent extends Agent {
     ACLMessage msg = createRequestMessage(this, getAMS(), search);
     itsFrame.setItsMsg(msg);
   }
-
 
   public void doSearchDF() {
 
@@ -188,7 +175,6 @@ public class TestAgent extends Agent {
     itsFrame.setItsMsg(msg);
   }
 
-
   public void doLausannePing() {
     ACLMessage msg = new ACLMessage(ACLMessage.QUERY_REF);
     msg.setSender(getAID());
@@ -204,7 +190,6 @@ public class TestAgent extends Agent {
     itsFrame.setItsMsg(msg);
   }
 
-
   public void doLocalPing() {
     ACLMessage msg = new ACLMessage(ACLMessage.QUERY_REF);
     msg.setSender(getAID());
@@ -216,10 +201,8 @@ public class TestAgent extends Agent {
     itsFrame.setItsMsg(msg);
   }
 
-
-
   /**
-   *  Description of the Method
+   * Description of the Method
    */
   public void doHelloWorld() {
     ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
@@ -234,26 +217,23 @@ public class TestAgent extends Agent {
     itsFrame.setItsMsg(msg);
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    */
   public void doSystemOut() {
     System.out.println(itsFrame.getItsMsg());
   }
 
-
   /**
-   *  exit method
+   * exit method
    */
   public void doExit() {
     this.doDelete();
     System.exit(0);
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    */
   public void doNewMessage() {
     ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
@@ -261,9 +241,8 @@ public class TestAgent extends Agent {
     itsFrame.setItsMsg(msg);
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    */
   public void sendMessage() {
     ACLMessage msg = itsFrame.getItsMsg();
@@ -272,11 +251,10 @@ public class TestAgent extends Agent {
     doNewMessage();
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    *
-   * @param  msg  Description of Parameter
+   * @param msg Description of Parameter
    */
   public void processIncomingMessage(ACLMessage msg) {
     itsFrame.addMessageNode("in", msg);
@@ -285,10 +263,9 @@ public class TestAgent extends Agent {
         return;
       }
 
-      if ((msg.getPerformative() == ACLMessage.QUERY_REF) &&
-        (msg.getContent().equalsIgnoreCase("ping") ||
-        (msg.getContent().equalsIgnoreCase("(ping)"))
-        )) {
+      if ((msg.getPerformative() == ACLMessage.QUERY_REF)
+          && (msg.getContent().equalsIgnoreCase("ping")
+              || (msg.getContent().equalsIgnoreCase("(ping)")))) {
         ACLMessage alive = msg.createReply();
         alive.setPerformative(ACLMessage.INFORM);
         alive.setSender(this.getAID());
@@ -298,8 +275,6 @@ public class TestAgent extends Agent {
       }
     }
   }
-
-
 
   public void doReply() {
     ACLMessage msg = itsFrame.aclTreePanel.getCurrentACL();
@@ -311,24 +286,23 @@ public class TestAgent extends Agent {
     itsFrame.aclPanel.setItsMsg(reply);
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    */
   protected void setup() {
     super.setup();
     splash = new SplashScreen();
     splash.setVisible(true);
     splash.setProgress(25);
-    if(logger.isLoggable(Logger.FINE))
-    	logger.log(Logger.FINE,"starting up: " + this.getAID().toString());
+    if (logger.isLoggable(Logger.FINE))
+      logger.log(Logger.FINE, "starting up: " + this.getAID().toString());
 
     try {
       getContentManager().registerLanguage(new SLCodec(), FIPANames.ContentLanguage.FIPA_SL0);
-      getContentManager().registerOntology(FIPAManagementOntology.getInstance(), FIPAManagementVocabulary.NAME);
+      getContentManager().registerOntology(FIPAManagementOntology.getInstance(),
+          FIPAManagementVocabulary.NAME);
 
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
 
@@ -339,7 +313,6 @@ public class TestAgent extends Agent {
     splash.setProgress(100);
     splash.setVisible(false);
   }
-
 
   ACLMessage createRequestMessage(Agent sender, AID receiver, AgentAction what) {
     ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
@@ -357,25 +330,22 @@ public class TestAgent extends Agent {
     act.setAction(what);
 
     try {
-    	getContentManager().fillContent(request, act);
+      getContentManager().fillContent(request, act);
     } catch (Exception e) {
-    	e.printStackTrace();
-	}
+      e.printStackTrace();
+    }
     return request;
   }
 
-
-  
-
   /**
-   *  Description of the Class
+   * Description of the Class
    *
-   * @author     chris
-   * @created    May 21, 2002
+   * @author chris
+   * @created May 21, 2002
    */
   private class SplashScreen extends JWindow {
     /**
-     *  Constructor for the SplashScreen object
+     * Constructor for the SplashScreen object
      */
     public SplashScreen() {
 
@@ -384,38 +354,34 @@ public class TestAgent extends Agent {
         this.setSize(400, 50);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(screenSize.width / 2 - this.getSize().width / 2,
-          screenSize.height / 2 - this.getSize().height / 2);
+            screenSize.height / 2 - this.getSize().height / 2);
         this.setVisible(true);
         this.requestFocus();
 
         // paintImmediately();
         Toolkit.getDefaultToolkit().sync();
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         e.printStackTrace();
       }
     }
 
-
     /**
-     *  Sets the Progress attribute of the SplashScreen object
+     * Sets the Progress attribute of the SplashScreen object
      *
-     * @param  p  The new Progress value
+     * @param p The new Progress value
      */
     public void setProgress(int p) {
       theProgressBar.setValue(p);
     }
 
-
     void jbInit() {
       this.getContentPane().setLayout(gridBagLayout1);
       this.getContentPane().setBackground(Color.white);
-      this.addFocusListener(
-        new java.awt.event.FocusAdapter() {
-          public void focusLost(FocusEvent e) {
+      this.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(FocusEvent e) {
 
-          }
-        });
+        }
+      });
       jPanel1.setBorder(BorderFactory.createLineBorder(Color.black));
       jPanel1.setLayout(gridBagLayout2);
       jLabel1.setBackground(Color.white);
@@ -428,15 +394,15 @@ public class TestAgent extends Agent {
       theProgressBar.setForeground(Color.blue);
       theProgressBar.setValue(5);
       theProgressBar.setStringPainted(true);
-      this.getContentPane().add(jPanel1, new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0
-        , GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-      jPanel1.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0
-        , GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-      jPanel1.add(theProgressBar, new GridBagConstraints(0, 1, 1, 1, 1.0, 0.0
-        , GridBagConstraints.SOUTHEAST, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
+      this.getContentPane().add(jPanel1, new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0,
+          GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+      jPanel1.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER,
+          GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+      jPanel1.add(theProgressBar,
+          new GridBagConstraints(0, 1, 1, 1, 1.0, 0.0, GridBagConstraints.SOUTHEAST,
+              GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
 
     }
-
 
     GridBagLayout gridBagLayout1 = new GridBagLayout();
     JPanel jPanel1 = new JPanel();
@@ -446,14 +412,12 @@ public class TestAgent extends Agent {
 
   }
 
-
   boolean pingBehaviour = true;
 
-  ImageIcon dummyIcon =
-    new ImageIcon(this.getClass().getResource("images/dummy.gif"));
+  ImageIcon dummyIcon = new ImageIcon(this.getClass().getResource("images/dummy.gif"));
 
   SplashScreen splash;
 
   TestAgentFrame itsFrame;
 }
-//  ***EOF***
+// ***EOF***

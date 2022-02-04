@@ -1,28 +1,24 @@
 /******************************************************************
- * JADE - Java Agent DEvelopment Framework is a framework to develop
- * multi-agent systems in compliance with the FIPA specifications.
- * Copyright (C) 2002 TILAB S.p.A.
+ * JADE - Java Agent DEvelopment Framework is a framework to develop multi-agent systems in
+ * compliance with the FIPA specifications. Copyright (C) 2002 TILAB S.p.A.
  *
  * This file is donated by Acklin B.V. to the JADE project.
  *
  *
  * GNU Lesser General Public License
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation,
- * version 2.1 of the License.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, version 2.1 of
+ * the License.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA  02111-1307, USA.
- * ***************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ ***************************************************************/
 package jade.tools.gui;
 
 import java.awt.*;
@@ -54,16 +50,16 @@ import jade.lang.acl.ACLMessage;
 import jade.tools.sl.SLFormatter;
 
 /**
- *  jEdit's text area component. The original file is written by Slava Pestov
- *  and altered to fit ACL/SL
+ * jEdit's text area component. The original file is written by Slava Pestov and altered to fit
+ * ACL/SL
  *
- * @author     Slava Pestov
- * @created    June 8, 2002
- * @version    $Id$
+ * @author Slava Pestov
+ * @created June 8, 2002
+ * @version $Id$
  */
 public class ACLTextArea extends JComponent {
   /**
-   *  Creates a new JEditTextArea with the default settings.
+   * Creates a new JEditTextArea with the default settings.
    */
   public ACLTextArea() {
     // Enable the necessary events
@@ -91,8 +87,8 @@ public class ACLTextArea extends JComponent {
 
     add(vertical = new JScrollBar(JScrollBar.VERTICAL), BorderLayout.EAST);
     add(horizontal = new JScrollBar(JScrollBar.HORIZONTAL), BorderLayout.SOUTH);
-//    vertical.setVisibleAmount(20);
-//    horizontal.setVisibleAmount(50);
+    // vertical.setVisibleAmount(20);
+    // horizontal.setVisibleAmount(50);
     // Add some event listeners
     vertical.addAdjustmentListener(new AdjustHandler());
     horizontal.addAdjustmentListener(new AdjustHandler());
@@ -115,498 +111,439 @@ public class ACLTextArea extends JComponent {
     // We don't seem to get the initial focus event?
     focusedComponent = this;
 
-    //set tokenMarker
+    // set tokenMarker
     setTokenMarker(new ACLSLTokenMarker());
   }
 
-
   /**
-   *  Returns if this component can be traversed by pressing the Tab key. This
-   *  returns false.
+   * Returns if this component can be traversed by pressing the Tab key. This returns false.
    *
-   * @return    The ManagingFocus value
+   * @return The ManagingFocus value
    */
   public final boolean isManagingFocus() {
     return true;
   }
 
-
   /**
-   *  Returns the object responsible for painting this text area.
+   * Returns the object responsible for painting this text area.
    *
-   * @return    The Painter value
+   * @return The Painter value
    */
   public final ACLTextAreaPainter getPainter() {
     return painter;
   }
 
-
   /**
-   *  Returns the input handler.
+   * Returns the input handler.
    *
-   * @return    The InputHandler value
+   * @return The InputHandler value
    */
   public final InputHandler getInputHandler() {
     return inputHandler;
   }
 
-
   /**
-   *  Returns true if the caret is blinking, false otherwise.
+   * Returns true if the caret is blinking, false otherwise.
    *
-   * @return    The CaretBlinkEnabled value
+   * @return The CaretBlinkEnabled value
    */
   public final boolean isCaretBlinkEnabled() {
     return caretBlinks;
   }
 
-
   /**
-   *  Returns true if the caret is visible, false otherwise.
+   * Returns true if the caret is visible, false otherwise.
    *
-   * @return    The CaretVisible value
+   * @return The CaretVisible value
    */
   public final boolean isCaretVisible() {
     return (!caretBlinks || blink) && caretVisible;
   }
 
-
   /**
-   *  Returns the number of lines from the top and button of the text area
-   *  that are always visible.
+   * Returns the number of lines from the top and button of the text area that are always visible.
    *
-   * @return    The ElectricScroll value
+   * @return The ElectricScroll value
    */
   public final int getElectricScroll() {
     return electricScroll;
   }
 
-
   /**
-   *  Returns the line displayed at the text area's origin.
+   * Returns the line displayed at the text area's origin.
    *
-   * @return    The FirstLine value
+   * @return The FirstLine value
    */
   public final int getFirstLine() {
     return firstLine;
   }
 
-
   /**
-   *  Returns the number of lines visible in this text area.
+   * Returns the number of lines visible in this text area.
    *
-   * @return    The VisibleLines value
+   * @return The VisibleLines value
    */
   public final int getVisibleLines() {
     return visibleLines;
   }
 
-
   /**
-   *  Returns the horizontal offset of drawn lines.
+   * Returns the horizontal offset of drawn lines.
    *
-   * @return    The HorizontalOffset value
+   * @return The HorizontalOffset value
    */
   public final int getHorizontalOffset() {
     return horizontalOffset;
   }
 
-
   /**
-   *  Returns the document this text area is editing.
+   * Returns the document this text area is editing.
    *
-   * @return    The Document value
+   * @return The Document value
    */
   public final ACLSyntaxDocument getDocument() {
     return document;
   }
 
-
   /**
-   *  Returns the document's token marker. Equivalent to calling <code>getDocument().getTokenMarker()</code>
-   *  .
+   * Returns the document's token marker. Equivalent to calling
+   * <code>getDocument().getTokenMarker()</code> .
    *
-   * @return    The TokenMarker value
+   * @return The TokenMarker value
    */
   public final ACLSLTokenMarker getTokenMarker() {
     return document.getTokenMarker();
   }
 
-
   /**
-   *  Returns the length of the document. Equivalent to calling <code>getDocument().getLength()</code>
-   *  .
+   * Returns the length of the document. Equivalent to calling
+   * <code>getDocument().getLength()</code> .
    *
-   * @return    The DocumentLength value
+   * @return The DocumentLength value
    */
   public final int getDocumentLength() {
     return document.getLength();
   }
 
-
   /**
-   *  Returns the number of lines in the document.
+   * Returns the number of lines in the document.
    *
-   * @return    The LineCount value
+   * @return The LineCount value
    */
   public final int getLineCount() {
     return document.getDefaultRootElement().getElementCount();
   }
 
-
   /**
-   *  Returns the line containing the specified offset.
+   * Returns the line containing the specified offset.
    *
-   * @param  offset  The offset
-   * @return         The LineOfOffset value
+   * @param offset The offset
+   * @return The LineOfOffset value
    */
   public final int getLineOfOffset(int offset) {
     return document.getDefaultRootElement().getElementIndex(offset);
   }
 
-
   /**
-   *  Returns the specified substring of the document.
+   * Returns the specified substring of the document.
    *
-   * @param  start  The start offset
-   * @param  len    The length of the substring
-   * @return        The substring, or null if the offsets are invalid
+   * @param start The start offset
+   * @param len The length of the substring
+   * @return The substring, or null if the offsets are invalid
    */
   public final String getText(int start, int len) {
     try {
       return document.getText(start, len);
-    }
-    catch (BadLocationException bl) {
+    } catch (BadLocationException bl) {
       return null;
     }
   }
 
-
   /**
-   *  Copies the specified substring of the document into a segment. If the
-   *  offsets are invalid, the segment will contain a null string.
+   * Copies the specified substring of the document into a segment. If the offsets are invalid, the
+   * segment will contain a null string.
    *
-   * @param  start    The start offset
-   * @param  len      The length of the substring
-   * @param  segment  The segment
+   * @param start The start offset
+   * @param len The length of the substring
+   * @param segment The segment
    */
   public final void getText(int start, int len, Segment segment) {
     try {
       document.getText(start, len, segment);
-    }
-    catch (BadLocationException bl) {
+    } catch (BadLocationException bl) {
       segment.offset = segment.count = 0;
     }
   }
 
-
   /**
-   *  Returns the text on the specified line.
+   * Returns the text on the specified line.
    *
-   * @param  lineIndex  The line
-   * @return            The text, or null if the line is invalid
+   * @param lineIndex The line
+   * @return The text, or null if the line is invalid
    */
   public final String getLineText(int lineIndex) {
     int start = getLineStartOffset(lineIndex);
     return getText(start, getLineEndOffset(lineIndex) - start - 1);
   }
 
-
   /**
-   *  Copies the text on the specified line into a segment. If the line is
-   *  invalid, the segment will contain a null string.
+   * Copies the text on the specified line into a segment. If the line is invalid, the segment will
+   * contain a null string.
    *
-   * @param  lineIndex  The line
-   * @param  segment    Description of Parameter
+   * @param lineIndex The line
+   * @param segment Description of Parameter
    */
   public final void getLineText(int lineIndex, Segment segment) {
     int start = getLineStartOffset(lineIndex);
     getText(start, getLineEndOffset(lineIndex) - start - 1, segment);
   }
 
-
   /**
-   *  Returns the selection start offset.
+   * Returns the selection start offset.
    *
-   * @return    The SelectionStart value
+   * @return The SelectionStart value
    */
   public final int getSelectionStart() {
     return selectionStart;
   }
 
-
   /**
-   *  Returns the selection start line.
+   * Returns the selection start line.
    *
-   * @return    The SelectionStartLine value
+   * @return The SelectionStartLine value
    */
   public final int getSelectionStartLine() {
     return selectionStartLine;
   }
 
-
   /**
-   *  Returns the selection end offset.
+   * Returns the selection end offset.
    *
-   * @return    The SelectionEnd value
+   * @return The SelectionEnd value
    */
   public final int getSelectionEnd() {
     return selectionEnd;
   }
 
-
   /**
-   *  Returns the selection end line.
+   * Returns the selection end line.
    *
-   * @return    The SelectionEndLine value
+   * @return The SelectionEndLine value
    */
   public final int getSelectionEndLine() {
     return selectionEndLine;
   }
 
-
   /**
-   *  Returns the caret position. This will either be the selection start or
-   *  the selection end, depending on which direction the selection was made
-   *  in.
+   * Returns the caret position. This will either be the selection start or the selection end,
+   * depending on which direction the selection was made in.
    *
-   * @return    The CaretPosition value
+   * @return The CaretPosition value
    */
   public final int getCaretPosition() {
     return (biasLeft ? selectionStart : selectionEnd);
   }
 
-
   /**
-   *  Returns the caret line.
+   * Returns the caret line.
    *
-   * @return    The CaretLine value
+   * @return The CaretLine value
    */
   public final int getCaretLine() {
     return (biasLeft ? selectionStartLine : selectionEndLine);
   }
 
-
   /**
-   *  Returns the mark position. This will be the opposite selection bound to
-   *  the caret position.
+   * Returns the mark position. This will be the opposite selection bound to the caret position.
    *
-   * @return    The MarkPosition value
-   * @see       #getCaretPosition()
+   * @return The MarkPosition value
+   * @see #getCaretPosition()
    */
   public final int getMarkPosition() {
     return (biasLeft ? selectionEnd : selectionStart);
   }
 
-
   /**
-   *  Returns the mark line.
+   * Returns the mark line.
    *
-   * @return    The MarkLine value
+   * @return The MarkLine value
    */
   public final int getMarkLine() {
     return (biasLeft ? selectionEndLine : selectionStartLine);
   }
 
-
   /**
-   *  Returns the selected text, or null if no selection is active.
+   * Returns the selected text, or null if no selection is active.
    *
-   * @return    The SelectedText value
+   * @return The SelectedText value
    */
   public final String getSelectedText() {
     if (selectionStart == selectionEnd) {
       return null;
     }
-    return getText(selectionStart,
-      selectionEnd - selectionStart);
+    return getText(selectionStart, selectionEnd - selectionStart);
   }
 
-
   /**
-   *  Returns true if this text area is editable, false otherwise.
+   * Returns true if this text area is editable, false otherwise.
    *
-   * @return    The Editable value
+   * @return The Editable value
    */
   public final boolean isEditable() {
     return editable;
   }
 
-
   /**
-   *  Returns the right click popup menu.
+   * Returns the right click popup menu.
    *
-   * @return    The RightClickPopup value
+   * @return The RightClickPopup value
    */
   public final JPopupMenu getRightClickPopup() {
     return popup;
   }
 
-
   /**
-   *  Returns the `magic' caret position. This can be used to preserve the
-   *  column position when moving up and down lines.
+   * Returns the `magic' caret position. This can be used to preserve the column position when
+   * moving up and down lines.
    *
-   * @return    The MagicCaretPosition value
+   * @return The MagicCaretPosition value
    */
   public final int getMagicCaretPosition() {
     return magicCaret;
   }
 
-
   /**
-   *  Returns true if overwrite mode is enabled, false otherwise.
+   * Returns true if overwrite mode is enabled, false otherwise.
    *
-   * @return    The OverwriteEnabled value
+   * @return The OverwriteEnabled value
    */
   public final boolean isOverwriteEnabled() {
     return overwrite;
   }
 
-
   /**
-   *  Returns the position of the highlighted bracket (the bracket matching
-   *  the one before the caret)
+   * Returns the position of the highlighted bracket (the bracket matching the one before the caret)
    *
-   * @return    The BracketPosition value
+   * @return The BracketPosition value
    */
   public final int getBracketPosition() {
     return bracketPosition;
   }
 
-
   /**
-   *  Returns the line of the highlighted bracket (the bracket matching the
-   *  one before the caret)
+   * Returns the line of the highlighted bracket (the bracket matching the one before the caret)
    *
-   * @return    The BracketLine value
+   * @return The BracketLine value
    */
   public final int getBracketLine() {
     return bracketLine;
   }
 
-
   /**
-   *  Sets the number of lines from the top and bottom of the text area that
-   *  are always visible
+   * Sets the number of lines from the top and bottom of the text area that are always visible
    *
-   * @param  electricScroll  The number of lines always visible from the top
-   *      or bottom
+   * @param electricScroll The number of lines always visible from the top or bottom
    */
   public final void setElectricScroll(int electricScroll) {
     this.electricScroll = electricScroll;
   }
 
-
   /**
-   *  Sets the document's token marker. Equivalent to caling <code>getDocument().setTokenMarker()</code>
-   *  .
+   * Sets the document's token marker. Equivalent to caling
+   * <code>getDocument().setTokenMarker()</code> .
    *
-   * @param  tokenMarker  The token marker
+   * @param tokenMarker The token marker
    */
   public final void setTokenMarker(ACLSLTokenMarker tokenMarker) {
     document.setTokenMarker(tokenMarker);
   }
 
-
   /**
-   *  Sets the selection start. The new selection will be the new selection
-   *  start and the old selection end.
+   * Sets the selection start. The new selection will be the new selection start and the old
+   * selection end.
    *
-   * @param  selectionStart  The selection start
-   * @see                    #select(int,int)
+   * @param selectionStart The selection start
+   * @see #select(int,int)
    */
   public final void setSelectionStart(int selectionStart) {
     select(selectionStart, selectionEnd);
   }
 
-
   /**
-   *  Sets the selection end. The new selection will be the old selection
-   *  start and the bew selection end.
+   * Sets the selection end. The new selection will be the old selection start and the bew selection
+   * end.
    *
-   * @param  selectionEnd  The selection end
-   * @see                  #select(int,int)
+   * @param selectionEnd The selection end
+   * @see #select(int,int)
    */
   public final void setSelectionEnd(int selectionEnd) {
     select(selectionStart, selectionEnd);
   }
 
-
   /**
-   *  Sets the caret position. The new selection will consist of the caret
-   *  position only (hence no text will be selected)
+   * Sets the caret position. The new selection will consist of the caret position only (hence no
+   * text will be selected)
    *
-   * @param  caret  The caret position
-   * @see           #select(int,int)
+   * @param caret The caret position
+   * @see #select(int,int)
    */
   public final void setCaretPosition(int caret) {
     select(caret, caret);
   }
 
-
   /**
-   *  Sets if this component is editable.
+   * Sets if this component is editable.
    *
-   * @param  editable  True if this text area should be editable, false
-   *      otherwise
+   * @param editable True if this text area should be editable, false otherwise
    */
   public final void setEditable(boolean editable) {
     this.editable = editable;
   }
 
-
   /**
-   *  Sets the right click popup menu.
+   * Sets the right click popup menu.
    *
-   * @param  popup  The popup
+   * @param popup The popup
    */
   public final void setRightClickPopup(JPopupMenu popup) {
     this.popup = popup;
   }
 
-
   /**
-   *  Sets the `magic' caret position. This can be used to preserve the column
-   *  position when moving up and down lines.
+   * Sets the `magic' caret position. This can be used to preserve the column position when moving
+   * up and down lines.
    *
-   * @param  magicCaret  The magic caret position
+   * @param magicCaret The magic caret position
    */
   public final void setMagicCaretPosition(int magicCaret) {
     this.magicCaret = magicCaret;
   }
 
-
   /**
-   *  Sets if overwrite mode should be enabled.
+   * Sets if overwrite mode should be enabled.
    *
-   * @param  overwrite  True if overwrite mode should be enabled, false
-   *      otherwise.
+   * @param overwrite True if overwrite mode should be enabled, false otherwise.
    */
   public final void setOverwriteEnabled(boolean overwrite) {
     this.overwrite = overwrite;
     painter.invalidateSelectedLines();
   }
 
-
   /**
-   *  Blinks the caret.
+   * Blinks the caret.
    */
   public final void blinkCaret() {
     if (caretBlinks) {
       blink = !blink;
       painter.invalidateSelectedLines();
-    }
-    else {
+    } else {
       blink = true;
     }
 
   }
 
-
   /**
-   *  Recalculates the number of visible lines. This should not be called
-   *  directly.
+   * Recalculates the number of visible lines. This should not be called directly.
    */
   public final void recalculateVisibleLines() {
     if (painter == null) {
@@ -621,111 +558,93 @@ public class ACLTextArea extends JComponent {
     updateScrollBars();
   }
 
-
   /**
-   *  Selects all text in the document.
+   * Selects all text in the document.
    */
   public final void selectAll() {
     select(0, getDocumentLength());
   }
 
-
   /**
-   *  Adds a caret change listener to this text area.
+   * Adds a caret change listener to this text area.
    *
-   * @param  listener  The listener
+   * @param listener The listener
    */
   public final void addCaretListener(CaretListener listener) {
     listenerList.add(CaretListener.class, listener);
   }
 
-
   /**
-   *  Removes a caret change listener from this text area.
+   * Removes a caret change listener from this text area.
    *
-   * @param  listener  The listener
+   * @param listener The listener
    */
   public final void removeCaretListener(CaretListener listener) {
     listenerList.remove(CaretListener.class, listener);
   }
 
-
   /**
-   *  Returns the start offset of the specified line.
+   * Returns the start offset of the specified line.
    *
-   * @param  line  The line
-   * @return       The start offset of the specified line, or -1 if the line
-   *      is invalid
+   * @param line The line
+   * @return The start offset of the specified line, or -1 if the line is invalid
    */
   public int getLineStartOffset(int line) {
-    Element lineElement = document.getDefaultRootElement()
-      .getElement(line);
+    Element lineElement = document.getDefaultRootElement().getElement(line);
     if (lineElement == null) {
       return -1;
-    }
-    else {
+    } else {
       return lineElement.getStartOffset();
     }
   }
 
-
   /**
-   *  Returns the end offset of the specified line.
+   * Returns the end offset of the specified line.
    *
-   * @param  line  The line
-   * @return       The end offset of the specified line, or -1 if the line is
-   *      invalid.
+   * @param line The line
+   * @return The end offset of the specified line, or -1 if the line is invalid.
    */
   public int getLineEndOffset(int line) {
-    Element lineElement = document.getDefaultRootElement()
-      .getElement(line);
+    Element lineElement = document.getDefaultRootElement().getElement(line);
     if (lineElement == null) {
       return -1;
-    }
-    else {
+    } else {
       return lineElement.getEndOffset();
     }
   }
 
-
   /**
-   *  Returns the length of the specified line.
+   * Returns the length of the specified line.
    *
-   * @param  line  The line
-   * @return       The LineLength value
+   * @param line The line
+   * @return The LineLength value
    */
   public int getLineLength(int line) {
-    Element lineElement = document.getDefaultRootElement()
-      .getElement(line);
+    Element lineElement = document.getDefaultRootElement().getElement(line);
     if (lineElement == null) {
       return -1;
-    }
-    else {
-      return lineElement.getEndOffset()
-         - lineElement.getStartOffset() - 1;
+    } else {
+      return lineElement.getEndOffset() - lineElement.getStartOffset() - 1;
     }
   }
 
-
   /**
-   *  Returns the entire text of this text area.
+   * Returns the entire text of this text area.
    *
-   * @return    The Text value
+   * @return The Text value
    */
   public String getText() {
     try {
       return document.getText(0, document.getLength());
-    }
-    catch (BadLocationException bl) {
+    } catch (BadLocationException bl) {
       return null;
     }
   }
 
-
   /**
-   *  Sets the input handler.
+   * Sets the input handler.
    *
-   * @param  inputHandler  The new input handler
+   * @param inputHandler The new input handler
    */
   public void setInputHandler(InputHandler inputHandler) {
     if (this.inputHandler != null) {
@@ -739,11 +658,10 @@ public class ACLTextArea extends JComponent {
     this.inputHandler = inputHandler;
   }
 
-
   /**
-   *  Toggles caret blinking.
+   * Toggles caret blinking.
    *
-   * @param  caretBlinks  True if the caret should blink, false otherwise
+   * @param caretBlinks True if the caret should blink, false otherwise
    */
   public void setCaretBlinkEnabled(boolean caretBlinks) {
     this.caretBlinks = caretBlinks;
@@ -754,12 +672,10 @@ public class ACLTextArea extends JComponent {
     painter.invalidateSelectedLines();
   }
 
-
   /**
-   *  Sets if the caret should be visible.
+   * Sets if the caret should be visible.
    *
-   * @param  caretVisible  True if the caret should be visible, false
-   *      otherwise
+   * @param caretVisible True if the caret should be visible, false otherwise
    */
   public void setCaretVisible(boolean caretVisible) {
     this.caretVisible = caretVisible;
@@ -768,12 +684,10 @@ public class ACLTextArea extends JComponent {
     painter.invalidateSelectedLines();
   }
 
-
   /**
-   *  Sets the line displayed at the text area's origin without updating the
-   *  scroll bars.
+   * Sets the line displayed at the text area's origin without updating the scroll bars.
    *
-   * @param  firstLine  The new FirstLine value
+   * @param firstLine The new FirstLine value
    */
   public void setFirstLine(int firstLine) {
     if (firstLine == this.firstLine) {
@@ -788,12 +702,10 @@ public class ACLTextArea extends JComponent {
     painter.repaint();
   }
 
-
   /**
-   *  Sets the horizontal offset of drawn lines. This can be used to implement
-   *  horizontal scrolling.
+   * Sets the horizontal offset of drawn lines. This can be used to implement horizontal scrolling.
    *
-   * @param  horizontalOffset  offset The new horizontal offset
+   * @param horizontalOffset offset The new horizontal offset
    */
   public void setHorizontalOffset(int horizontalOffset) {
     if (horizontalOffset == this.horizontalOffset) {
@@ -808,14 +720,12 @@ public class ACLTextArea extends JComponent {
     painter.repaint();
   }
 
-
   /**
-   *  A fast way of changing both the first line and horizontal offset.
+   * A fast way of changing both the first line and horizontal offset.
    *
-   * @param  firstLine         The new first line
-   * @param  horizontalOffset  The new horizontal offset
-   * @return                   True if any of the values were changed, false
-   *      otherwise
+   * @param firstLine The new first line
+   * @param horizontalOffset The new horizontal offset
+   * @return True if any of the values were changed, false otherwise
    */
   public boolean setOrigin(int firstLine, int horizontalOffset) {
     boolean changed = false;
@@ -835,8 +745,7 @@ public class ACLTextArea extends JComponent {
     if (changed) {
       updateScrollBars();
       if (fullRepaint) {
-        painter._invalidateLineRange(firstLine,
-          firstLine + visibleLines);
+        painter._invalidateLineRange(firstLine, firstLine + visibleLines);
       }
 
       else {
@@ -849,11 +758,10 @@ public class ACLTextArea extends JComponent {
     return changed;
   }
 
-
   /**
-   *  Sets the document this text area is editing.
+   * Sets the document this text area is editing.
    *
-   * @param  document  The document
+   * @param document The document
    */
   public void setDocument(ACLSyntaxDocument document) {
     if (this.document == document) {
@@ -873,62 +781,52 @@ public class ACLTextArea extends JComponent {
     painter.repaint();
   }
 
-
   /**
-   *  Sets the entire text of this text area.
+   * Sets the entire text of this text area.
    *
-   * @param  text  The new Text value
+   * @param text The new Text value
    */
   public void setText(String text) {
     try {
       document.remove(0, document.getLength());
       document.insertString(0, text, null);
-    }
-    catch (BadLocationException bl) {
+    } catch (BadLocationException bl) {
       bl.printStackTrace();
     }
   }
 
-
   /**
-   *  Replaces the selection with the specified text.
+   * Replaces the selection with the specified text.
    *
-   * @param  selectedText  The replacement text for the selection
+   * @param selectedText The replacement text for the selection
    */
   public void setSelectedText(String selectedText) {
     if (!editable) {
-      throw new InternalError("Text component"
-         + " read only");
+      throw new InternalError("Text component" + " read only");
     }
 
     try {
-      document.remove(selectionStart,
-        selectionEnd - selectionStart);
-      document.insertString(selectionStart,
-        selectedText, null);
+      document.remove(selectionStart, selectionEnd - selectionStart);
+      document.insertString(selectionStart, selectedText, null);
       setCaretPosition(selectionEnd);
-    }
-    catch (BadLocationException bl) {
+    } catch (BadLocationException bl) {
       bl.printStackTrace();
-      throw new InternalError("Cannot replace"
-         + " selection");
+      throw new InternalError("Cannot replace" + " selection");
     }
   }
-
 
   public void update() {
     this.register(msg, "Content");
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    *
-   * @param  arg        Description of Parameter
-   * @param  fieldName  Description of Parameter
+   * @param arg Description of Parameter
+   * @param fieldName Description of Parameter
    */
   public void register(Object arg, String fieldName) {
-    this.msg = (ACLMessage)arg;
+    this.msg = (ACLMessage) arg;
     this.fieldName = fieldName;
     contentLanguage = (msg.getLanguage() != null ? msg.getLanguage() : "<unknown>");
     String methodName = "get" + fieldName;
@@ -936,18 +834,16 @@ public class ACLTextArea extends JComponent {
 
     try {
       Method sn = msg.getClass().getMethod(methodName, (Class[]) null);
-      content = (String)sn.invoke(msg, new Object[]{});
-    }
-    catch (Exception ex) {
+      content = (String) sn.invoke(msg, new Object[] {});
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
     if (contentLanguage.indexOf("SL") >= 0) {
-      //Only format when SL
+      // Only format when SL
       try {
-        content = (String)new SLFormatter().format(content);
-      }
-      catch (Exception ex) {
-        //too bad!
+        content = (String) new SLFormatter().format(content);
+      } catch (Exception ex) {
+        // too bad!
       }
     }
 
@@ -959,22 +855,20 @@ public class ACLTextArea extends JComponent {
     this.setCaretPosition(0);
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    *
-   * @param  arg  Description of Parameter
-   * @param  str  Description of Parameter
+   * @param arg Description of Parameter
+   * @param str Description of Parameter
    */
   public void unregister(Object arg, String str) {
-//    msg.deleteObserver(this);
+    // msg.deleteObserver(this);
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    *
-   * @param  e  Description of Parameter
+   * @param e Description of Parameter
    */
   public void focusLost(FocusEvent e) {
     String value = getText();
@@ -985,20 +879,17 @@ public class ACLTextArea extends JComponent {
     String methodName = "set" + fieldName;
     String theType = "java.lang.String";
     try {
-      Method sn = msg.getClass().getMethod(methodName, new Class[]{Class.forName(theType)});
+      Method sn = msg.getClass().getMethod(methodName, new Class[] {Class.forName(theType)});
       Object os = value;
-      sn.invoke(msg, new Object[]{os});
-    }
-    catch (Exception ex) {
+      sn.invoke(msg, new Object[] {os});
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
   }
 
-
   /**
-   *  Updates the state of the scroll bars. This should be called if the
-   *  number of lines in the document changes, or when the size of the text
-   *  are changes.
+   * Updates the state of the scroll bars. This should be called if the number of lines in the
+   * document changes, or when the size of the text are changes.
    */
   public void updateScrollBars() {
 
@@ -1010,38 +901,31 @@ public class ACLTextArea extends JComponent {
     int width = painter.getWidth();
     if (horizontal != null && width != 0) {
       horizontal.setValues(-horizontalOffset, width, 0, width * 5);
-      horizontal.setUnitIncrement(painter.getFontMetrics()
-        .charWidth('w'));
+      horizontal.setUnitIncrement(painter.getFontMetrics().charWidth('w'));
       horizontal.setBlockIncrement(width / 2);
     }
   }
 
-
   /**
-   *  Ensures that the caret is visible by scrolling the text area if
-   *  necessary.
+   * Ensures that the caret is visible by scrolling the text area if necessary.
    *
-   * @return    True if scrolling was actually performed, false if the caret
-   *      was already visible
+   * @return True if scrolling was actually performed, false if the caret was already visible
    */
   public boolean scrollToCaret() {
     int line = getCaretLine();
     int lineStart = getLineStartOffset(line);
-    int offset = Math.max(0, Math.min(getLineLength(line) - 1,
-      getCaretPosition() - lineStart));
+    int offset = Math.max(0, Math.min(getLineLength(line) - 1, getCaretPosition() - lineStart));
 
     return scrollTo(line, offset);
   }
 
-
   /**
-   *  Ensures that the specified line and offset is visible by scrolling the
-   *  text area if necessary.
+   * Ensures that the specified line and offset is visible by scrolling the text area if necessary.
    *
-   * @param  line    The line to scroll to
-   * @param  offset  The offset in the line to scroll to
-   * @return         True if scrolling was actually performed, false if the
-   *      line and offset was already visible
+   * @param line The line to scroll to
+   * @param offset The offset in the line to scroll to
+   * @return True if scrolling was actually performed, false if the line and offset was already
+   *         visible
    */
   public boolean scrollTo(int line, int offset) {
     // visibleLines == 0 before the component is realized
@@ -1075,59 +959,52 @@ public class ACLTextArea extends JComponent {
     int width = painter.getFontMetrics().charWidth('W');
 
     if (x < 0) {
-      newHorizontalOffset = Math.min(0, horizontalOffset
-         - x + width);
+      newHorizontalOffset = Math.min(0, horizontalOffset - x + width);
     }
 
     else if (x + width >= painter.getWidth()) {
-      newHorizontalOffset = horizontalOffset +
-        (painter.getWidth() - x) - width;
+      newHorizontalOffset = horizontalOffset + (painter.getWidth() - x) - width;
     }
 
     return setOrigin(newFirstLine, newHorizontalOffset);
   }
 
-
   /**
-   *  Converts a line index to a y co-ordinate.
+   * Converts a line index to a y co-ordinate.
    *
-   * @param  line  The line
-   * @return       Description of the Returned Value
+   * @param line The line
+   * @return Description of the Returned Value
    */
   public int lineToY(int line) {
     FontMetrics fm = painter.getFontMetrics();
-    return (line - firstLine) * fm.getHeight()
-       - (fm.getLeading() + fm.getMaxDescent());
+    return (line - firstLine) * fm.getHeight() - (fm.getLeading() + fm.getMaxDescent());
   }
 
-
   /**
-   *  Converts a y co-ordinate to a line index.
+   * Converts a y co-ordinate to a line index.
    *
-   * @param  y  The y co-ordinate
-   * @return    Description of the Returned Value
+   * @param y The y co-ordinate
+   * @return Description of the Returned Value
    */
   public int yToLine(int y) {
     FontMetrics fm = painter.getFontMetrics();
     int height = fm.getHeight();
-    return Math.max(0, Math.min(getLineCount() - 1,
-      y / height + firstLine));
+    return Math.max(0, Math.min(getLineCount() - 1, y / height + firstLine));
   }
 
-
   /**
-   *  Converts an offset in a line into an x co-ordinate.
+   * Converts an offset in a line into an x co-ordinate.
    *
-   * @param  line    The line
-   * @param  offset  The offset, from the start of the line
-   * @return         Description of the Returned Value
+   * @param line The line
+   * @param offset The offset, from the start of the line
+   * @return Description of the Returned Value
    */
   public int offsetToX(int line, int offset) {
     ACLSLTokenMarker tokenMarker = getTokenMarker();
 
     /*
-        Use painter's cached info for speed
-      */
+     * Use painter's cached info for speed
+     */
     FontMetrics fm = painter.getFontMetrics();
 
     getLineText(line, lineSegment);
@@ -1136,17 +1013,15 @@ public class ACLTextArea extends JComponent {
     int x = horizontalOffset;
 
     /*
-        If syntax coloring is disabled, do simple translation
-      */
+     * If syntax coloring is disabled, do simple translation
+     */
     if (tokenMarker == null) {
       lineSegment.count = offset;
-      return x + Utilities.getTabbedTextWidth(lineSegment,
-        fm, x, painter, 0);
+      return x + Utilities.getTabbedTextWidth(lineSegment, fm, x, painter, 0);
     }
     /*
-        If syntax coloring is enabled, we have to do this because
-        tokens can vary in width
-      */
+     * If syntax coloring is enabled, we have to do this because tokens can vary in width
+     */
     else {
       ACLToken tokens;
       if (painter.currentLineIndex == line) {
@@ -1155,15 +1030,14 @@ public class ACLTextArea extends JComponent {
 
       else {
         painter.currentLineIndex = line;
-        tokens = painter.currentLineTokens
-           = tokenMarker.markTokens(lineSegment, line);
+        tokens = painter.currentLineTokens = tokenMarker.markTokens(lineSegment, line);
       }
 
       Toolkit toolkit = painter.getToolkit();
       Font defaultFont = painter.getFont();
       ACLSytntaxStyle[] styles = painter.getStyles();
 
-      for (; ; ) {
+      for (;;) {
         byte id = tokens.id;
         if (id == ACLToken.END) {
           return x;
@@ -1181,13 +1055,10 @@ public class ACLTextArea extends JComponent {
 
         if (offset + segmentOffset < lineSegment.offset + length) {
           lineSegment.count = offset - (lineSegment.offset - segmentOffset);
-          return x + Utilities.getTabbedTextWidth(
-            lineSegment, fm, x, painter, 0);
-        }
-        else {
+          return x + Utilities.getTabbedTextWidth(lineSegment, fm, x, painter, 0);
+        } else {
           lineSegment.count = length;
-          x += Utilities.getTabbedTextWidth(
-            lineSegment, fm, x, painter, 0);
+          x += Utilities.getTabbedTextWidth(lineSegment, fm, x, painter, 0);
           lineSegment.offset += length;
         }
         tokens = tokens.next;
@@ -1195,20 +1066,19 @@ public class ACLTextArea extends JComponent {
     }
   }
 
-
   /**
-   *  Converts an x co-ordinate to an offset within a line.
+   * Converts an x co-ordinate to an offset within a line.
    *
-   * @param  line  The line
-   * @param  x     The x co-ordinate
-   * @return       Description of the Returned Value
+   * @param line The line
+   * @param x The x co-ordinate
+   * @return Description of the Returned Value
    */
   public int xToOffset(int line, int x) {
     ACLSLTokenMarker tokenMarker = getTokenMarker();
 
     /*
-        Use painter's cached info for speed
-      */
+     * Use painter's cached info for speed
+     */
     FontMetrics fm = painter.getFontMetrics();
 
     getLineText(line, lineSegment);
@@ -1224,8 +1094,7 @@ public class ACLTextArea extends JComponent {
         char c = segmentArray[i + segmentOffset];
         int charWidth;
         if (c == '\t') {
-          charWidth = (int)painter.nextTabStop(width, i)
-             - width;
+          charWidth = (int) painter.nextTabStop(width, i) - width;
         }
 
         else {
@@ -1237,8 +1106,7 @@ public class ACLTextArea extends JComponent {
             return i;
           }
 
-          else
-            if (x - charWidth / 2 <= width) {
+          else if (x - charWidth / 2 <= width) {
             return i;
           }
         }
@@ -1247,8 +1115,7 @@ public class ACLTextArea extends JComponent {
       }
 
       return segmentCount;
-    }
-    else {
+    } else {
       ACLToken tokens;
       if (painter.currentLineIndex == line) {
         tokens = painter.currentLineTokens;
@@ -1256,8 +1123,7 @@ public class ACLTextArea extends JComponent {
 
       else {
         painter.currentLineIndex = line;
-        tokens = painter.currentLineTokens
-           = tokenMarker.markTokens(lineSegment, line);
+        tokens = painter.currentLineTokens = tokenMarker.markTokens(lineSegment, line);
       }
 
       int offset = 0;
@@ -1265,7 +1131,7 @@ public class ACLTextArea extends JComponent {
       Font defaultFont = painter.getFont();
       ACLSytntaxStyle[] styles = painter.getStyles();
 
-      for (; ; ) {
+      for (;;) {
         byte id = tokens.id;
         if (id == ACLToken.END) {
           return offset;
@@ -1285,8 +1151,7 @@ public class ACLTextArea extends JComponent {
           char c = segmentArray[segmentOffset + offset + i];
           int charWidth;
           if (c == '\t') {
-            charWidth = (int)painter.nextTabStop(width, offset + i)
-               - width;
+            charWidth = (int) painter.nextTabStop(width, offset + i) - width;
           }
 
           else {
@@ -1298,8 +1163,7 @@ public class ACLTextArea extends JComponent {
               return offset + i;
             }
 
-            else
-              if (x - charWidth / 2 <= width) {
+            else if (x - charWidth / 2 <= width) {
               return offset + i;
             }
           }
@@ -1313,13 +1177,12 @@ public class ACLTextArea extends JComponent {
     }
   }
 
-
   /**
-   *  Converts a point to an offset, from the start of the text.
+   * Converts a point to an offset, from the start of the text.
    *
-   * @param  x  The x co-ordinate of the point
-   * @param  y  The y co-ordinate of the point
-   * @return    Description of the Returned Value
+   * @param x The x co-ordinate of the point
+   * @param y The y co-ordinate of the point
+   * @return Description of the Returned Value
    */
   public int xyToOffset(int x, int y) {
     int line = yToLine(y);
@@ -1327,14 +1190,13 @@ public class ACLTextArea extends JComponent {
     return start + xToOffset(line, x);
   }
 
-
   /**
-   *  Selects from the start offset to the end offset. This is the general
-   *  selection method used by all other selecting methods. The caret position
-   *  will be start if start &lt; end, and end if end &gt; start.
+   * Selects from the start offset to the end offset. This is the general selection method used by
+   * all other selecting methods. The caret position will be start if start &lt; end, and end if end
+   * &gt; start.
    *
-   * @param  start  The start offset
-   * @param  end    The end offset
+   * @param start The start offset
+   * @param end The end offset
    */
   public void select(int start, int end) {
     int newStart;
@@ -1344,24 +1206,20 @@ public class ACLTextArea extends JComponent {
       newStart = start;
       newEnd = end;
       newBias = false;
-    }
-    else {
+    } else {
       newStart = end;
       newEnd = start;
       newBias = true;
     }
 
     if (newStart < 0 || newEnd > getDocumentLength()) {
-      throw new IllegalArgumentException("Bounds out of"
-         + " range: " + newStart + "," +
-        newEnd);
+      throw new IllegalArgumentException("Bounds out of" + " range: " + newStart + "," + newEnd);
     }
 
     // If the new position is the same as the old, we don't
     // do all this crap, however we still do the stuff at
     // the end (clearing magic position, scrolling)
-    if (newStart != selectionStart || newEnd != selectionEnd
-       || newBias != biasLeft) {
+    if (newStart != selectionStart || newEnd != selectionEnd || newBias != biasLeft) {
       int newStartLine = getLineOfOffset(newStart);
       int newEndLine = getLineOfOffset(newEnd);
 
@@ -1403,14 +1261,13 @@ public class ACLTextArea extends JComponent {
 
   }
 
-
   /**
-   *  Similar to <code>setSelectedText()</code>, but overstrikes the
-   *  appropriate number of characters if overwrite mode is enabled.
+   * Similar to <code>setSelectedText()</code>, but overstrikes the appropriate number of characters
+   * if overwrite mode is enabled.
    *
-   * @param  str  The string
-   * @see         #setSelectedText(String)
-   * @see         #isOverwriteEnabled()
+   * @param str The string
+   * @see #setSelectedText(String)
+   * @see #isOverwriteEnabled()
    */
   public void overwriteSetSelectedText(String str) {
     // Don't overstrike if there is a selection
@@ -1431,16 +1288,13 @@ public class ACLTextArea extends JComponent {
     try {
       document.remove(caret, str.length());
       document.insertString(caret, str, null);
-    }
-    catch (BadLocationException bl) {
+    } catch (BadLocationException bl) {
       bl.printStackTrace();
     }
   }
 
-
   /**
-   *  Deletes the selected text from the text area and places it into the
-   *  clipboard.
+   * Deletes the selected text from the text area and places it into the clipboard.
    */
   public void cut() {
     if (editable) {
@@ -1449,46 +1303,40 @@ public class ACLTextArea extends JComponent {
     }
   }
 
-
   /**
-   *  Places the selected text into the clipboard.
+   * Places the selected text into the clipboard.
    */
   public void copy() {
     if (selectionStart != selectionEnd) {
       Clipboard clipboard = getToolkit().getSystemClipboard();
-      StringSelection selection = new StringSelection(
-        getSelectedText());
+      StringSelection selection = new StringSelection(getSelectedText());
       clipboard.setContents(selection, null);
     }
   }
 
-
   /**
-   *  Inserts the clipboard contents into the text.
+   * Inserts the clipboard contents into the text.
    */
   public void paste() {
     if (editable) {
       Clipboard clipboard = getToolkit().getSystemClipboard();
       try {
-        String selection = (String)(clipboard.getContents(this).getTransferData(
-          DataFlavor.stringFlavor));
+        String selection =
+            (String) (clipboard.getContents(this).getTransferData(DataFlavor.stringFlavor));
 
         // The MacOS MRJ doesn't convert \r to \n,
         // so do it here
         setSelectedText(selection.replace('\r', '\n'));
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         getToolkit().beep();
-        System.err.println("Clipboard does not"
-           + " contain a string");
+        System.err.println("Clipboard does not" + " contain a string");
       }
     }
   }
 
-
   /**
-   *  Called by the AWT when this component is removed from it's parent. This
-   *  stops any autoscrolling and clears the currently focused component.
+   * Called by the AWT when this component is removed from it's parent. This stops any autoscrolling
+   * and clears the currently focused component.
    */
   public void removeNotify() {
     super.removeNotify();
@@ -1502,11 +1350,10 @@ public class ACLTextArea extends JComponent {
 
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    *
-   * @param  e  Description of Parameter
+   * @param e Description of Parameter
    */
   protected void processFocusEvent(FocusEvent e) {
     super.processFocusEvent(e);
@@ -1516,17 +1363,15 @@ public class ACLTextArea extends JComponent {
 
   }
 
-
   protected void fireCaretEvent() {
     Object[] listeners = listenerList.getListenerList();
     for (int i = listeners.length - 2; i >= 0; i--) {
       if (listeners[i] == CaretListener.class) {
-        ((CaretListener)listeners[i + 1]).caretUpdate(caretEvent);
+        ((CaretListener) listeners[i + 1]).caretUpdate(caretEvent);
       }
     }
 
   }
-
 
   protected void updateBracketHighlight(int newCaretPosition) {
     if (newCaretPosition == 0) {
@@ -1535,25 +1380,21 @@ public class ACLTextArea extends JComponent {
     }
 
     try {
-      int offset = TextUtilities.findMatchingBracket(
-        document, newCaretPosition - 1);
+      int offset = TextUtilities.findMatchingBracket(document, newCaretPosition - 1);
       if (offset != -1) {
         bracketLine = getLineOfOffset(offset);
         bracketPosition = offset - getLineStartOffset(bracketLine);
         return;
       }
-    }
-    catch (BadLocationException bl) {
+    } catch (BadLocationException bl) {
       bl.printStackTrace();
     }
 
     bracketLine = bracketPosition = -1;
   }
 
-
   protected void documentChanged(DocumentEvent evt) {
-    DocumentEvent.ElementChange ch = evt.getChange(
-      document.getDefaultRootElement());
+    DocumentEvent.ElementChange ch = evt.getChange(document.getDefaultRootElement());
 
     int count;
     if (ch == null) {
@@ -1561,37 +1402,30 @@ public class ACLTextArea extends JComponent {
     }
 
     else {
-      count = ch.getChildrenAdded().length -
-        ch.getChildrenRemoved().length;
+      count = ch.getChildrenAdded().length - ch.getChildrenRemoved().length;
     }
 
     if (count == 0) {
       int line = getLineOfOffset(evt.getOffset());
       painter._invalidateLine(line);
-    }
-    else {
+    } else {
       int index = ch.getIndex();
-      painter._invalidateLineRange(index, Math.max(getLineCount(),
-        firstLine + visibleLines));
+      painter._invalidateLineRange(index, Math.max(getLineCount(), firstLine + visibleLines));
       updateScrollBars();
     }
   }
 
-
   public static class TextUtilities {
     /**
-     *  Returns the offset of the bracket matching the one at the specified
-     *  offset of the document, or -1 if the bracket is unmatched (or if the
-     *  character is not a bracket).
+     * Returns the offset of the bracket matching the one at the specified offset of the document,
+     * or -1 if the bracket is unmatched (or if the character is not a bracket).
      *
-     * @param  doc                       The document
-     * @param  offset                    The offset
-     * @return                           Description of the Returned Value
-     * @exception  BadLocationException  If an out-of-bounds access was
-     *      attempted on the document text
+     * @param doc The document
+     * @param offset The offset
+     * @return Description of the Returned Value
+     * @exception BadLocationException If an out-of-bounds access was attempted on the document text
      */
-    public static int findMatchingBracket(Document doc, int offset)
-       throws BadLocationException {
+    public static int findMatchingBracket(Document doc, int offset) throws BadLocationException {
       if (doc.getLength() == 0) {
         return -1;
       }
@@ -1663,8 +1497,7 @@ public class ACLTextArea extends JComponent {
           }
 
         }
-      }
-      else {
+      } else {
         // Count is 1 initially because we have already
         // `found' one opening bracket
         count = 1;
@@ -1707,27 +1540,23 @@ public class ACLTextArea extends JComponent {
     }
   }
 
-
   static class CaretBlinker implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
-      if (focusedComponent != null
-         && focusedComponent.hasFocus()) {
+      if (focusedComponent != null && focusedComponent.hasFocus()) {
         focusedComponent.blinkCaret();
       }
 
     }
   }
 
-
   private static class InputHandler implements KeyListener {
 
     /**
-     *  Creates a new input handler with no key bindings defined.
+     * Creates a new input handler with no key bindings defined.
      */
     public InputHandler() {
       bindings = currentBindings = new Hashtable();
     }
-
 
     public static ACLTextArea getTextArea(EventObject evt) {
 
@@ -1735,17 +1564,15 @@ public class ACLTextArea extends JComponent {
         Object o = evt.getSource();
         if (o instanceof Component) {
           // find the parent text area
-          Component c = (Component)o;
-          for (; ; ) {
+          Component c = (Component) o;
+          for (;;) {
             if (c instanceof ACLTextArea) {
-              return (ACLTextArea)c;
-            }
-            else if (c == null) {
+              return (ACLTextArea) c;
+            } else if (c == null) {
               break;
             }
             if (c instanceof JPopupMenu) {
-              c = ((JPopupMenu)c)
-                .getInvoker();
+              c = ((JPopupMenu) c).getInvoker();
             }
 
             else {
@@ -1762,17 +1589,14 @@ public class ACLTextArea extends JComponent {
       return null;
     }
 
-
     /**
-     *  Converts a string to a keystroke. The string should be of the form <i>
-     *  modifiers</i> +<i>shortcut</i> where <i>modifiers</i> is any
-     *  combination of A for Alt, C for Control, S for Shift or M for Meta,
-     *  and <i>shortcut </i> is either a single character, or a keycode name
-     *  from the <code>KeyEvent</code> class, without the <code>VK_</code>
-     *  prefix.
+     * Converts a string to a keystroke. The string should be of the form <i> modifiers</i>
+     * +<i>shortcut</i> where <i>modifiers</i> is any combination of A for Alt, C for Control, S for
+     * Shift or M for Meta, and <i>shortcut </i> is either a single character, or a keycode name
+     * from the <code>KeyEvent</code> class, without the <code>VK_</code> prefix.
      *
-     * @param  keyStroke  A string description of the key stroke
-     * @return            Description of the Returned Value
+     * @param keyStroke A string description of the key stroke
+     * @return Description of the Returned Value
      */
     public static KeyStroke parseKeyStroke(String keyStroke) {
       if (keyStroke == null) {
@@ -1808,15 +1632,11 @@ public class ACLTextArea extends JComponent {
       else if (key.length() == 0) {
         System.err.println("Invalid key stroke: " + keyStroke);
         return null;
-      }
-      else {
+      } else {
         try {
-          ch = KeyEvent.class.getField("VK_".concat(key))
-            .getInt(null);
-        }
-        catch (Exception e) {
-          System.err.println("Invalid key stroke: "
-             + keyStroke);
+          ch = KeyEvent.class.getField("VK_".concat(key)).getInt(null);
+        } catch (Exception e) {
+          System.err.println("Invalid key stroke: " + keyStroke);
           return null;
         }
       }
@@ -1824,9 +1644,8 @@ public class ACLTextArea extends JComponent {
       return KeyStroke.getKeyStroke(ch, modifiers);
     }
 
-
     /**
-     *  Sets up the default key bindings.
+     * Sets up the default key bindings.
      */
     public void addDefaultKeyBindings() {
       addKeyBinding("BACK_SPACE", BACKSPACE);
@@ -1861,16 +1680,14 @@ public class ACLTextArea extends JComponent {
       addKeyBinding("S+DOWN", SELECT_NEXT_LINE);
     }
 
-
     /**
-     *  Adds a key binding to this input handler. The key binding is a list of
-     *  white space separated key strokes of the form <i>[modifiers+]key</i>
-     *  where modifier is C for Control, A for Alt, or S for Shift, and key is
-     *  either a character (a-z) or a field name in the KeyEvent class
-     *  prefixed with VK_ (e.g., BACK_SPACE)
+     * Adds a key binding to this input handler. The key binding is a list of white space separated
+     * key strokes of the form <i>[modifiers+]key</i> where modifier is C for Control, A for Alt, or
+     * S for Shift, and key is either a character (a-z) or a field name in the KeyEvent class
+     * prefixed with VK_ (e.g., BACK_SPACE)
      *
-     * @param  keyBinding  The key binding
-     * @param  action      The action
+     * @param keyBinding The key binding
+     * @param action The action
      */
     public void addKeyBinding(String keyBinding, ActionListener action) {
       Hashtable current = bindings;
@@ -1885,59 +1702,49 @@ public class ACLTextArea extends JComponent {
         if (st.hasMoreTokens()) {
           Object o = current.get(keyStroke);
           if (o instanceof Hashtable) {
-            current = (Hashtable)o;
+            current = (Hashtable) o;
           }
 
           else {
             o = new Hashtable();
             current.put(keyStroke, o);
-            current = (Hashtable)o;
+            current = (Hashtable) o;
           }
-        }
-        else {
+        } else {
           current.put(keyStroke, action);
         }
 
       }
     }
 
-
     /**
-     *  Removes a key binding from this input handler. This is not yet
-     *  implemented.
+     * Removes a key binding from this input handler. This is not yet implemented.
      *
-     * @param  keyBinding  The key binding
+     * @param keyBinding The key binding
      */
     public void removeKeyBinding(String keyBinding) {
       throw new InternalError("Not yet implemented");
     }
 
-
     /**
-     *  Removes all key bindings from this input handler.
+     * Removes all key bindings from this input handler.
      */
     public void removeAllKeyBindings() {
       bindings.clear();
     }
 
-
     /**
-     *  Handle a key pressed event. This will look up the binding for the key
-     *  stroke and execute it.
+     * Handle a key pressed event. This will look up the binding for the key stroke and execute it.
      *
-     * @param  evt  Description of Parameter
+     * @param evt Description of Parameter
      */
     public void keyPressed(KeyEvent evt) {
       int keyCode = evt.getKeyCode();
       int modifiers = evt.getModifiers();
-      if ((modifiers & ~KeyEvent.SHIFT_MASK) != 0
-         || evt.isActionKey()
-         || keyCode == KeyEvent.VK_BACK_SPACE
-         || keyCode == KeyEvent.VK_DELETE
-         || keyCode == KeyEvent.VK_ENTER
-         || keyCode == KeyEvent.VK_TAB) {
-        KeyStroke keyStroke = KeyStroke.getKeyStroke(keyCode,
-          modifiers);
+      if ((modifiers & ~KeyEvent.SHIFT_MASK) != 0 || evt.isActionKey()
+          || keyCode == KeyEvent.VK_BACK_SPACE || keyCode == KeyEvent.VK_DELETE
+          || keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_TAB) {
+        KeyStroke keyStroke = KeyStroke.getKeyStroke(keyCode, modifiers);
         Object o = currentBindings.get(keyStroke);
         if (o == null) {
           // Don't beep if the user presses some
@@ -1952,51 +1759,40 @@ public class ACLTextArea extends JComponent {
           }
           currentBindings = bindings;
           return;
-        }
-        else if (o instanceof ActionListener) {
-          ((ActionListener)o).actionPerformed(
-            new ActionEvent(evt.getSource(),
-            ActionEvent.ACTION_PERFORMED,
-            null, modifiers));
+        } else if (o instanceof ActionListener) {
+          ((ActionListener) o).actionPerformed(
+              new ActionEvent(evt.getSource(), ActionEvent.ACTION_PERFORMED, null, modifiers));
           currentBindings = bindings;
           evt.consume();
           return;
-        }
-        else if (o instanceof Hashtable) {
-          currentBindings = (Hashtable)o;
+        } else if (o instanceof Hashtable) {
+          currentBindings = (Hashtable) o;
           evt.consume();
           return;
-        }
-        else if (keyCode != KeyEvent.VK_ALT
-           && keyCode != KeyEvent.VK_CONTROL
-           && keyCode != KeyEvent.VK_SHIFT
-           && keyCode != KeyEvent.VK_META) {
+        } else if (keyCode != KeyEvent.VK_ALT && keyCode != KeyEvent.VK_CONTROL
+            && keyCode != KeyEvent.VK_SHIFT && keyCode != KeyEvent.VK_META) {
           return;
         }
       }
     }
 
-
     /**
-     *  Handle a key released event. These are ignored.
+     * Handle a key released event. These are ignored.
      *
-     * @param  evt  Description of Parameter
+     * @param evt Description of Parameter
      */
-    public void keyReleased(KeyEvent evt) {
-    }
-
+    public void keyReleased(KeyEvent evt) {}
 
     /**
-     *  Handle a key typed event. This inserts the key into the text area.
+     * Handle a key typed event. This inserts the key into the text area.
      *
-     * @param  evt  Description of Parameter
+     * @param evt Description of Parameter
      */
     public void keyTyped(KeyEvent evt) {
 
       int modifiers = evt.getModifiers();
       char c = evt.getKeyChar();
-      if (c != KeyEvent.CHAR_UNDEFINED &&
-        (modifiers & KeyEvent.ALT_MASK) == 0) {
+      if (c != KeyEvent.CHAR_UNDEFINED && (modifiers & KeyEvent.ALT_MASK) == 0) {
         if (c >= 0x20 && c != 0x7f) {
           ACLTextArea textArea = getTextArea(evt);
           if (!textArea.isEditable()) {
@@ -2012,7 +1808,6 @@ public class ACLTextArea extends JComponent {
 
     }
 
-
     public static class backspace implements ActionListener {
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2022,8 +1817,7 @@ public class ACLTextArea extends JComponent {
           return;
         }
 
-        if (textArea.getSelectionStart()
-           != textArea.getSelectionEnd()) {
+        if (textArea.getSelectionStart() != textArea.getSelectionEnd()) {
           textArea.setSelectedText("");
         }
 
@@ -2035,14 +1829,12 @@ public class ACLTextArea extends JComponent {
           }
           try {
             textArea.getDocument().remove(caret - 1, 1);
-          }
-          catch (BadLocationException bl) {
+          } catch (BadLocationException bl) {
             bl.printStackTrace();
           }
         }
       }
     }
-
 
     public static class delete implements ActionListener {
       public void actionPerformed(ActionEvent evt) {
@@ -2053,8 +1845,7 @@ public class ACLTextArea extends JComponent {
           return;
         }
 
-        if (textArea.getSelectionStart()
-           != textArea.getSelectionEnd()) {
+        if (textArea.getSelectionStart() != textArea.getSelectionEnd()) {
           textArea.setSelectedText("");
         }
 
@@ -2066,14 +1857,12 @@ public class ACLTextArea extends JComponent {
           }
           try {
             textArea.getDocument().remove(caret, 1);
-          }
-          catch (BadLocationException bl) {
+          } catch (BadLocationException bl) {
             bl.printStackTrace();
           }
         }
       }
     }
-
 
     public static class end implements ActionListener {
 
@@ -2081,20 +1870,16 @@ public class ACLTextArea extends JComponent {
         this.select = select;
       }
 
-
       public void actionPerformed(ActionEvent evt) {
 
         ACLTextArea textArea = getTextArea(evt);
 
         int caret = textArea.getCaretPosition();
 
-        int lastOfLine = textArea.getLineEndOffset(
-          textArea.getCaretLine()) - 1;
-        int lastVisibleLine = textArea.getFirstLine()
-           + textArea.getVisibleLines();
+        int lastOfLine = textArea.getLineEndOffset(textArea.getCaretLine()) - 1;
+        int lastVisibleLine = textArea.getFirstLine() + textArea.getVisibleLines();
         if (lastVisibleLine >= textArea.getLineCount()) {
-          lastVisibleLine = Math.min(textArea.getLineCount() - 1,
-            lastVisibleLine);
+          lastVisibleLine = Math.min(textArea.getLineCount() - 1, lastVisibleLine);
         }
 
         else {
@@ -2107,8 +1892,7 @@ public class ACLTextArea extends JComponent {
         if (caret == lastDocument) {
           textArea.getToolkit().beep();
           return;
-        }
-        else if (caret == lastVisible) {
+        } else if (caret == lastVisible) {
           caret = lastDocument;
         }
 
@@ -2130,17 +1914,14 @@ public class ACLTextArea extends JComponent {
 
       }
 
-
       private boolean select;
     }
-
 
     public static class home implements ActionListener {
 
       public home(boolean select) {
         this.select = select;
       }
-
 
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2149,18 +1930,14 @@ public class ACLTextArea extends JComponent {
 
         int firstLine = textArea.getFirstLine();
 
-        int firstOfLine = textArea.getLineStartOffset(
-          textArea.getCaretLine());
-        int firstVisibleLine = (firstLine == 0 ? 0 :
-          firstLine + textArea.getElectricScroll());
-        int firstVisible = textArea.getLineStartOffset(
-          firstVisibleLine);
+        int firstOfLine = textArea.getLineStartOffset(textArea.getCaretLine());
+        int firstVisibleLine = (firstLine == 0 ? 0 : firstLine + textArea.getElectricScroll());
+        int firstVisible = textArea.getLineStartOffset(firstVisibleLine);
 
         if (caret == 0) {
           textArea.getToolkit().beep();
           return;
-        }
-        else if (caret == firstVisible) {
+        } else if (caret == firstVisible) {
           caret = 0;
         }
 
@@ -2182,10 +1959,8 @@ public class ACLTextArea extends JComponent {
 
       }
 
-
       private boolean select;
     }
-
 
     public static class insert_break implements ActionListener {
       public void actionPerformed(ActionEvent evt) {
@@ -2200,7 +1975,6 @@ public class ACLTextArea extends JComponent {
       }
     }
 
-
     public static class insert_tab implements ActionListener {
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2214,13 +1988,11 @@ public class ACLTextArea extends JComponent {
       }
     }
 
-
     public static class next_char implements ActionListener {
 
       public next_char(boolean select) {
         this.select = select;
       }
-
 
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2231,8 +2003,7 @@ public class ACLTextArea extends JComponent {
         }
 
         if (select) {
-          textArea.select(textArea.getMarkPosition(),
-            caret + 1);
+          textArea.select(textArea.getMarkPosition(), caret + 1);
         }
 
         else {
@@ -2241,17 +2012,14 @@ public class ACLTextArea extends JComponent {
 
       }
 
-
       private boolean select;
     }
-
 
     public static class next_line implements ActionListener {
 
       public next_line(boolean select) {
         this.select = select;
       }
-
 
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2265,12 +2033,10 @@ public class ACLTextArea extends JComponent {
 
         int magic = textArea.getMagicCaretPosition();
         if (magic == -1) {
-          magic = textArea.offsetToX(line,
-            caret - textArea.getLineStartOffset(line));
+          magic = textArea.offsetToX(line, caret - textArea.getLineStartOffset(line));
         }
 
-        caret = textArea.getLineStartOffset(line + 1)
-           + textArea.xToOffset(line + 1, magic);
+        caret = textArea.getLineStartOffset(line + 1) + textArea.xToOffset(line + 1, magic);
         if (select) {
           textArea.select(textArea.getMarkPosition(), caret);
         }
@@ -2282,17 +2048,14 @@ public class ACLTextArea extends JComponent {
         textArea.setMagicCaretPosition(magic);
       }
 
-
       private boolean select;
     }
-
 
     public static class next_page implements ActionListener {
 
       public next_page(boolean select) {
         this.select = select;
       }
-
 
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2309,9 +2072,8 @@ public class ACLTextArea extends JComponent {
 
         textArea.setFirstLine(firstLine);
 
-        int caret = textArea.getLineStartOffset(
-          Math.min(textArea.getLineCount() - 1,
-          line + visibleLines));
+        int caret =
+            textArea.getLineStartOffset(Math.min(textArea.getLineCount() - 1, line + visibleLines));
         if (select) {
           textArea.select(textArea.getMarkPosition(), caret);
         }
@@ -2322,17 +2084,14 @@ public class ACLTextArea extends JComponent {
 
       }
 
-
       private boolean select;
     }
-
 
     public static class next_word implements ActionListener {
 
       public next_word(boolean select) {
         this.select = select;
       }
-
 
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2349,21 +2108,17 @@ public class ACLTextArea extends JComponent {
             return;
           }
           caret++;
-        }
-        else {
+        } else {
 
           char ch = lineText.charAt(caret);
 
-          String noWordSep = (String)textArea.getDocument()
-            .getProperty("noWordSep");
-          boolean selectNoLetter = (!Character.isLetterOrDigit(ch)
-             && noWordSep.indexOf(ch) == -1);
+          String noWordSep = (String) textArea.getDocument().getProperty("noWordSep");
+          boolean selectNoLetter = (!Character.isLetterOrDigit(ch) && noWordSep.indexOf(ch) == -1);
 
           int wordEnd = lineText.length();
           for (int i = caret; i < lineText.length(); i++) {
             ch = lineText.charAt(i);
-            if (selectNoLetter ^ (!Character.isLetterOrDigit(ch) &&
-              noWordSep.indexOf(ch) == -1)) {
+            if (selectNoLetter ^ (!Character.isLetterOrDigit(ch) && noWordSep.indexOf(ch) == -1)) {
               wordEnd = i;
               break;
             }
@@ -2372,8 +2127,7 @@ public class ACLTextArea extends JComponent {
         }
 
         if (select) {
-          textArea.select(textArea.getMarkPosition(),
-            lineStart + caret);
+          textArea.select(textArea.getMarkPosition(), lineStart + caret);
         }
 
         else {
@@ -2382,26 +2136,21 @@ public class ACLTextArea extends JComponent {
 
       }
 
-
       private boolean select;
     }
-
 
     public static class overwrite implements ActionListener {
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
-        textArea.setOverwriteEnabled(
-          !textArea.isOverwriteEnabled());
+        textArea.setOverwriteEnabled(!textArea.isOverwriteEnabled());
       }
     }
-
 
     public static class prev_char implements ActionListener {
 
       public prev_char(boolean select) {
         this.select = select;
       }
-
 
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2412,8 +2161,7 @@ public class ACLTextArea extends JComponent {
         }
 
         if (select) {
-          textArea.select(textArea.getMarkPosition(),
-            caret - 1);
+          textArea.select(textArea.getMarkPosition(), caret - 1);
         }
 
         else {
@@ -2422,17 +2170,14 @@ public class ACLTextArea extends JComponent {
 
       }
 
-
       private boolean select;
     }
-
 
     public static class prev_line implements ActionListener {
 
       public prev_line(boolean select) {
         this.select = select;
       }
-
 
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2446,12 +2191,10 @@ public class ACLTextArea extends JComponent {
 
         int magic = textArea.getMagicCaretPosition();
         if (magic == -1) {
-          magic = textArea.offsetToX(line,
-            caret - textArea.getLineStartOffset(line));
+          magic = textArea.offsetToX(line, caret - textArea.getLineStartOffset(line));
         }
 
-        caret = textArea.getLineStartOffset(line - 1)
-           + textArea.xToOffset(line - 1, magic);
+        caret = textArea.getLineStartOffset(line - 1) + textArea.xToOffset(line - 1, magic);
         if (select) {
           textArea.select(textArea.getMarkPosition(), caret);
         }
@@ -2463,17 +2206,14 @@ public class ACLTextArea extends JComponent {
         textArea.setMagicCaretPosition(magic);
       }
 
-
       private boolean select;
     }
-
 
     public static class prev_page implements ActionListener {
 
       public prev_page(boolean select) {
         this.select = select;
       }
-
 
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2487,8 +2227,7 @@ public class ACLTextArea extends JComponent {
 
         textArea.setFirstLine(firstLine - visibleLines);
 
-        int caret = textArea.getLineStartOffset(
-          Math.max(0, line - visibleLines));
+        int caret = textArea.getLineStartOffset(Math.max(0, line - visibleLines));
         if (select) {
           textArea.select(textArea.getMarkPosition(), caret);
         }
@@ -2499,17 +2238,14 @@ public class ACLTextArea extends JComponent {
 
       }
 
-
       private boolean select;
     }
-
 
     public static class prev_word implements ActionListener {
 
       public prev_word(boolean select) {
         this.select = select;
       }
-
 
       public void actionPerformed(ActionEvent evt) {
         ACLTextArea textArea = getTextArea(evt);
@@ -2526,20 +2262,16 @@ public class ACLTextArea extends JComponent {
             return;
           }
           caret--;
-        }
-        else {
+        } else {
           char ch = lineText.charAt(caret - 1);
 
-          String noWordSep = (String)textArea.getDocument()
-            .getProperty("noWordSep");
-          boolean selectNoLetter = (!Character.isLetterOrDigit(ch)
-             && noWordSep.indexOf(ch) == -1);
+          String noWordSep = (String) textArea.getDocument().getProperty("noWordSep");
+          boolean selectNoLetter = (!Character.isLetterOrDigit(ch) && noWordSep.indexOf(ch) == -1);
 
           int wordStart = 0;
           for (int i = caret - 1; i >= 0; i--) {
             ch = lineText.charAt(i);
-            if (selectNoLetter ^ (!Character.isLetterOrDigit(ch) &&
-              noWordSep.indexOf(ch) == -1)) {
+            if (selectNoLetter ^ (!Character.isLetterOrDigit(ch) && noWordSep.indexOf(ch) == -1)) {
               wordStart = i + 1;
               break;
             }
@@ -2548,8 +2280,7 @@ public class ACLTextArea extends JComponent {
         }
 
         if (select) {
-          textArea.select(textArea.getMarkPosition(),
-            lineStart + caret);
+          textArea.select(textArea.getMarkPosition(), lineStart + caret);
         }
 
         else {
@@ -2558,10 +2289,8 @@ public class ACLTextArea extends JComponent {
 
       }
 
-
       private boolean select;
     }
-
 
     public final static ActionListener BACKSPACE = new backspace();
     public final static ActionListener DELETE = new delete();
@@ -2589,27 +2318,22 @@ public class ACLTextArea extends JComponent {
     public final static ActionListener SELECT_PREV_PAGE = new prev_page(true);
     public final static ActionListener SELECT_PREV_WORD = new prev_word(true);
 
-    public final static ActionListener[] ACTIONS = {
-      BACKSPACE, DELETE, END, SELECT_END, INSERT_BREAK,
-      INSERT_TAB, HOME, SELECT_HOME, NEXT_CHAR, NEXT_LINE,
-      NEXT_PAGE, NEXT_WORD, SELECT_NEXT_CHAR, SELECT_NEXT_LINE,
-      SELECT_NEXT_PAGE, SELECT_NEXT_WORD, OVERWRITE, PREV_CHAR,
-      PREV_LINE, PREV_PAGE, PREV_WORD, SELECT_PREV_CHAR,
-      SELECT_PREV_LINE, SELECT_PREV_PAGE, SELECT_PREV_WORD};
+    public final static ActionListener[] ACTIONS =
+        {BACKSPACE, DELETE, END, SELECT_END, INSERT_BREAK, INSERT_TAB, HOME, SELECT_HOME, NEXT_CHAR,
+            NEXT_LINE, NEXT_PAGE, NEXT_WORD, SELECT_NEXT_CHAR, SELECT_NEXT_LINE, SELECT_NEXT_PAGE,
+            SELECT_NEXT_WORD, OVERWRITE, PREV_CHAR, PREV_LINE, PREV_PAGE, PREV_WORD,
+            SELECT_PREV_CHAR, SELECT_PREV_LINE, SELECT_PREV_PAGE, SELECT_PREV_WORD};
 
-    public final static String[] ACTION_NAMES = {
-      "backspace", "delete", "end", "select-end", "insert-break",
-      "insert-tab", "home", "select-home", "next-char", "next-line",
-      "next-page", "next-word", "select-next-char", "select-next-line",
-      "select-next-page", "select-next-word", "overwrite", "prev-char",
-      "prev-line", "prev-page", "prev-word", "select-prev-char",
-      "select-prev-line", "select-prev-page", "select-prev-word"};
+    public final static String[] ACTION_NAMES = {"backspace", "delete", "end", "select-end",
+        "insert-break", "insert-tab", "home", "select-home", "next-char", "next-line", "next-page",
+        "next-word", "select-next-char", "select-next-line", "select-next-page", "select-next-word",
+        "overwrite", "prev-char", "prev-line", "prev-page", "prev-word", "select-prev-char",
+        "select-prev-line", "select-prev-page", "select-prev-word"};
 
     // private members
     private Hashtable bindings;
     private Hashtable currentBindings;
   }
-
 
   class ScrollLayout implements LayoutManager {
     public void addLayoutComponent(String name, Component comp) {
@@ -2627,7 +2351,6 @@ public class ACLTextArea extends JComponent {
 
     }
 
-
     public void removeLayoutComponent(Component comp) {
       if (center == comp) {
         center = null;
@@ -2643,7 +2366,6 @@ public class ACLTextArea extends JComponent {
 
     }
 
-
     public Dimension preferredLayoutSize(Container parent) {
       Dimension dim = new Dimension();
       Insets insets = getInsets();
@@ -2656,12 +2378,10 @@ public class ACLTextArea extends JComponent {
       Dimension rightPref = right.getPreferredSize();
       dim.width += rightPref.width;
       /*
-          Dimension bottomPref = bottom.getPreferredSize();
-          dim.height += bottomPref.height;
-        */
+       * Dimension bottomPref = bottom.getPreferredSize(); dim.height += bottomPref.height;
+       */
       return dim;
     }
-
 
     public Dimension minimumLayoutSize(Container parent) {
       Dimension dim = new Dimension();
@@ -2680,7 +2400,6 @@ public class ACLTextArea extends JComponent {
       return dim;
     }
 
-
     public void layoutContainer(Container parent) {
       Dimension size = parent.getSize();
       Insets insets = getInsets();
@@ -2692,23 +2411,14 @@ public class ACLTextArea extends JComponent {
       int rightWidth = right.getPreferredSize().width;
       int bottomHeight = center.getPreferredSize().height;
 
-      center.setBounds(
-        ileft,
-        itop,
-        size.width - rightWidth - ileft - iright,
-        size.height - bottomHeight - itop - ibottom);
-      right.setBounds(
-        size.width - rightWidth - iright,
-        itop,
-        rightWidth,
-        size.height - bottomHeight - itop - ibottom);
+      center.setBounds(ileft, itop, size.width - rightWidth - ileft - iright,
+          size.height - bottomHeight - itop - ibottom);
+      right.setBounds(size.width - rightWidth - iright, itop, rightWidth,
+          size.height - bottomHeight - itop - ibottom);
       /*
-          bottom.setBounds(
-          ileft,
-          size.height - bottomHeight - ibottom,
-          size.width - rightWidth - ileft - iright,
-          bottomHeight);
-        */
+       * bottom.setBounds( ileft, size.height - bottomHeight - ibottom, size.width - rightWidth -
+       * ileft - iright, bottomHeight);
+       */
     }
 
     // private members
@@ -2717,13 +2427,11 @@ public class ACLTextArea extends JComponent {
     private Component bottom;
   }
 
-
   class AutoScroll implements ActionListener, MouseMotionListener {
 
     public void actionPerformed(ActionEvent evt) {
       select(getMarkPosition(), xyToOffset(x, y));
     }
-
 
     public void mouseDragged(MouseEvent evt) {
       if (popup != null && popup.isVisible()) {
@@ -2738,30 +2446,24 @@ public class ACLTextArea extends JComponent {
 
     }
 
-
-    public void mouseMoved(MouseEvent evt) { }
-
+    public void mouseMoved(MouseEvent evt) {}
 
     private int x, y;
   }
-
 
   class MutableCaretEvent extends CaretEvent {
     MutableCaretEvent() {
       super(ACLTextArea.this);
     }
 
-
     public int getDot() {
       return getCaretPosition();
     }
-
 
     public int getMark() {
       return getMarkPosition();
     }
   }
-
 
   class AdjustHandler implements AdjustmentListener {
     public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -2780,14 +2482,12 @@ public class ACLTextArea extends JComponent {
     }
   }
 
-
   class ComponentHandler extends ComponentAdapter {
     public void componentResized(ComponentEvent evt) {
       recalculateVisibleLines();
       scrollBarsInitialized = true;
     }
   }
-
 
   class DocumentHandler implements DocumentListener {
     public void insertUpdate(DocumentEvent evt) {
@@ -2804,16 +2504,14 @@ public class ACLTextArea extends JComponent {
       if (selectionStart >= offset) {
         newStart = selectionStart + length;
         repaint = false;
-      }
-      else {
+      } else {
         newStart = selectionStart;
       }
 
       if (selectionEnd >= offset) {
         newEnd = selectionEnd + length;
         repaint = false;
-      }
-      else {
+      } else {
         newEnd = selectionEnd;
       }
 
@@ -2824,7 +2522,6 @@ public class ACLTextArea extends JComponent {
       }
 
     }
-
 
     public void removeUpdate(DocumentEvent evt) {
       documentChanged(evt);
@@ -2847,8 +2544,7 @@ public class ACLTextArea extends JComponent {
         }
 
         repaint = false;
-      }
-      else {
+      } else {
         newStart = selectionStart;
       }
 
@@ -2862,8 +2558,7 @@ public class ACLTextArea extends JComponent {
         }
 
         repaint = false;
-      }
-      else {
+      } else {
         newEnd = selectionEnd;
       }
 
@@ -2875,11 +2570,8 @@ public class ACLTextArea extends JComponent {
 
     }
 
-
-    public void changedUpdate(DocumentEvent evt) {
-    }
+    public void changedUpdate(DocumentEvent evt) {}
   }
-
 
   class FocusHandler implements FocusListener {
     public void focusGained(FocusEvent evt) {
@@ -2887,20 +2579,17 @@ public class ACLTextArea extends JComponent {
       focusedComponent = ACLTextArea.this;
     }
 
-
     public void focusLost(FocusEvent evt) {
       setCaretVisible(false);
       focusedComponent = null;
     }
   }
 
-
   class MouseHandler extends MouseAdapter {
     public void mousePressed(MouseEvent evt) {
       requestFocus();
 
-      if ((evt.getModifiers() & InputEvent.BUTTON3_MASK) != 0
-         && popup != null) {
+      if ((evt.getModifiers() & InputEvent.BUTTON3_MASK) != 0 && popup != null) {
         popup.show(painter, evt.getX(), evt.getY());
         return;
       }
@@ -2918,8 +2607,7 @@ public class ACLTextArea extends JComponent {
           // it can throw a BLE
           try {
             doDoubleClick(evt, line, offset, dot);
-          }
-          catch (BadLocationException bl) {
+          } catch (BadLocationException bl) {
             bl.printStackTrace();
           }
           break;
@@ -2929,7 +2617,6 @@ public class ACLTextArea extends JComponent {
       }
     }
 
-
     public void mouseReleased(MouseEvent evt) {
       if (scrollTimer.isRunning()) {
         scrollTimer.stop();
@@ -2937,9 +2624,7 @@ public class ACLTextArea extends JComponent {
 
     }
 
-
-    private void doSingleClick(MouseEvent evt, int line,
-                               int offset, int dot) {
+    private void doSingleClick(MouseEvent evt, int line, int offset, int dot) {
       if ((evt.getModifiers() & InputEvent.SHIFT_MASK) != 0) {
         setSelectionEnd(dot);
       }
@@ -2950,17 +2635,15 @@ public class ACLTextArea extends JComponent {
 
     }
 
-
-    private void doDoubleClick(MouseEvent evt, int line,
-                               int offset, int dot) throws BadLocationException {
+    private void doDoubleClick(MouseEvent evt, int line, int offset, int dot)
+        throws BadLocationException {
       // Ignore empty lines
       if (getLineLength(line) == 0) {
         return;
       }
 
       try {
-        int bracket = TextUtilities.findMatchingBracket(
-          document, Math.max(0, dot - 1));
+        int bracket = TextUtilities.findMatchingBracket(document, Math.max(0, dot - 1));
         if (bracket != -1) {
           int mark = getMarkPosition();
           // Hack
@@ -2971,8 +2654,7 @@ public class ACLTextArea extends JComponent {
           select(mark, bracket);
           return;
         }
-      }
-      catch (BadLocationException bl) {
+      } catch (BadLocationException bl) {
         bl.printStackTrace();
       }
 
@@ -2980,22 +2662,20 @@ public class ACLTextArea extends JComponent {
       String lineText = getLineText(line);
       char ch = lineText.charAt(offset - 1);
 
-      String noWordSep = (String)document.getProperty("noWordSep");
+      String noWordSep = (String) document.getProperty("noWordSep");
       if (noWordSep == null) {
         noWordSep = "";
       }
 
       // If the user clicked on a non-letter char,
       // we select the surrounding non-letters
-      boolean selectNoLetter = (!Character.isLetterOrDigit(ch)
-         && noWordSep.indexOf(ch) == -1);
+      boolean selectNoLetter = (!Character.isLetterOrDigit(ch) && noWordSep.indexOf(ch) == -1);
 
       int wordStart = 0;
 
       for (int i = offset - 1; i >= 0; i--) {
         ch = lineText.charAt(i);
-        if (selectNoLetter ^ (!Character.isLetterOrDigit(ch) &&
-          noWordSep.indexOf(ch) == -1)) {
+        if (selectNoLetter ^ (!Character.isLetterOrDigit(ch) && noWordSep.indexOf(ch) == -1)) {
           wordStart = i + 1;
           break;
         }
@@ -3004,8 +2684,7 @@ public class ACLTextArea extends JComponent {
       int wordEnd = lineText.length();
       for (int i = offset; i < lineText.length(); i++) {
         ch = lineText.charAt(i);
-        if (selectNoLetter ^ (!Character.isLetterOrDigit(ch) &&
-          noWordSep.indexOf(ch) == -1)) {
+        if (selectNoLetter ^ (!Character.isLetterOrDigit(ch) && noWordSep.indexOf(ch) == -1)) {
           wordEnd = i;
           break;
         }
@@ -3015,13 +2694,10 @@ public class ACLTextArea extends JComponent {
       select(lineStart + wordStart, lineStart + wordEnd);
     }
 
-
-    private void doTripleClick(MouseEvent evt, int line,
-                               int offset, int dot) {
+    private void doTripleClick(MouseEvent evt, int line, int offset, int dot) {
       select(getLineStartOffset(line), getLineEndOffset(line) - 1);
     }
   }
-
 
   // protected members
   protected static String CENTER = "center";
@@ -3080,4 +2756,4 @@ public class ACLTextArea extends JComponent {
   private String fieldName;
 
 }
-//  ***EOF***
+// ***EOF***

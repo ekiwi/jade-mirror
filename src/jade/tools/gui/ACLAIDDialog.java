@@ -1,28 +1,24 @@
 /******************************************************************
- * JADE - Java Agent DEvelopment Framework is a framework to develop
- * multi-agent systems in compliance with the FIPA specifications.
- * Copyright (C) 2002 TILAB S.p.A.
+ * JADE - Java Agent DEvelopment Framework is a framework to develop multi-agent systems in
+ * compliance with the FIPA specifications. Copyright (C) 2002 TILAB S.p.A.
  *
  * This file is donated by Acklin B.V. to the JADE project.
  *
  *
  * GNU Lesser General Public License
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation,
- * version 2.1 of the License.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, version 2.1 of
+ * the License.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA  02111-1307, USA.
- * ***************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ ***************************************************************/
 package jade.tools.gui;
 
 import java.awt.*;
@@ -35,19 +31,18 @@ import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.util.leap.Iterator;
 
-
 /**
- *  This class is used to edit a particular AID.
+ * This class is used to edit a particular AID.
  *
- * @author     Chris van Aart - Acklin B.V., the Netherlands
- * @created    April 26, 2002
+ * @author Chris van Aart - Acklin B.V., the Netherlands
+ * @created April 26, 2002
  */
 
 public class ACLAIDDialog extends JDialog {
   /**
-   *  Constructor for the ACLAIDDialog object
+   * Constructor for the ACLAIDDialog object
    *
-   * @param  agent  link to agent
+   * @param agent link to agent
    */
   public ACLAIDDialog(Agent agent) {
     this.agent = agent;
@@ -57,38 +52,34 @@ public class ACLAIDDialog extends JDialog {
       jbInit();
       this.setSize(350, 250);
       setItsAID(new AID("", true));
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-
   /**
-   *  Gets the ItsAID attribute of the ACLAIDDialog object
+   * Gets the ItsAID attribute of the ACLAIDDialog object
    *
-   * @return    The ItsAID value
+   * @return The ItsAID value
    */
   public AID getItsAID() {
     return itsAID;
   }
 
-
   /**
-   *  Gets the OK attribute of the ACLAIDDialog object. OK is true when the
-   *  user has pressed the ob button of the dialog.
+   * Gets the OK attribute of the ACLAIDDialog object. OK is true when the user has pressed the ob
+   * button of the dialog.
    *
-   * @return    The OK value
+   * @return The OK value
    */
   public boolean getOK() {
     return userAction.equals(OK);
   }
 
-
   /**
-   *  Sets the Editable attribute of the ACLAIDDialog object
+   * Sets the Editable attribute of the ACLAIDDialog object
    *
-   * @param  theBool  The new Editable value
+   * @param theBool The new Editable value
    */
   public void setEditable(boolean theBool) {
     if (!theBool) {
@@ -101,11 +92,10 @@ public class ACLAIDDialog extends JDialog {
     }
   }
 
-
   /**
-   *  Sets the ItsAID attribute of the ACLAIDDialog object
+   * Sets the ItsAID attribute of the ACLAIDDialog object
    *
-   * @param  newItsAID  The new ItsAID value
+   * @param newItsAID The new ItsAID value
    */
   public void setItsAID(AID newItsAID) {
     itsAID = newItsAID;
@@ -120,52 +110,47 @@ public class ACLAIDDialog extends JDialog {
 
   }
 
-
   /**
-   *  Sets the UserAction attribute of the ACLAIDDialog object
+   * Sets the UserAction attribute of the ACLAIDDialog object
    *
-   * @param  newUserAction  The new UserAction value
+   * @param newUserAction The new UserAction value
    */
   public void setUserAction(String newUserAction) {
     userAction = newUserAction;
   }
 
-
   /**
-   *  Method triggered by the OK button
+   * Method triggered by the OK button
    *
-   * @param  e  ActionEvent of the OK button
+   * @param e ActionEvent of the OK button
    */
   void okButton_actionPerformed(ActionEvent e) {
     setUserAction(OK);
     this.setVisible(false);
   }
 
-
   /**
-   *  Method triggered by the cancel button
+   * Method triggered by the cancel button
    *
-   * @param  e  ActionEvent of the cancel button
+   * @param e ActionEvent of the cancel button
    */
   void cancelButton_actionPerformed(ActionEvent e) {
     setUserAction(CANCELLED);
     this.setVisible(false);
   }
 
-
   /**
-   *  Method triggered when leaving the textfield of "name"
+   * Method triggered when leaving the textfield of "name"
    *
-   * @param  e  FocusEvent of FocusLoust
+   * @param e FocusEvent of FocusLoust
    */
   void nameTextField_focusLost(FocusEvent e) {
     updateSenderName();
   }
 
-
   /**
-   *  Updates the name field of the current AID. The localCheckBox indicates
-   *  wheter the agent is local or not.
+   * Updates the name field of the current AID. The localCheckBox indicates wheter the agent is
+   * local or not.
    */
   void updateSenderName() {
     if (localCheckBox.isSelected()) {
@@ -178,21 +163,19 @@ public class ACLAIDDialog extends JDialog {
 
   }
 
-
   /**
-   *  Method triggered by changing the state of the checkbox of "local"
+   * Method triggered by changing the state of the checkbox of "local"
    *
-   * @param  e  ItemEvent belonging to itemStateChanged
+   * @param e ItemEvent belonging to itemStateChanged
    */
   void localCheckBox_itemStateChanged(ItemEvent e) {
     updateSenderName();
   }
 
-
   /**
-   *  builds up the dialog
+   * builds up the dialog
    *
-   * @exception  Exception  thrown when someting goes wrong
+   * @exception Exception thrown when someting goes wrong
    */
   private void jbInit() throws Exception {
     jLabel1.setFont(new java.awt.Font("Dialog", 0, 11));
@@ -201,12 +184,11 @@ public class ACLAIDDialog extends JDialog {
     nameTextField.setFont(new java.awt.Font("Dialog", 0, 11));
     nameTextField.setDisabledTextColor(Color.black);
     nameTextField.setText("someagent");
-    nameTextField.addFocusListener(
-      new java.awt.event.FocusAdapter() {
-        public void focusLost(FocusEvent e) {
-          nameTextField_focusLost(e);
-        }
-      });
+    nameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusLost(FocusEvent e) {
+        nameTextField_focusLost(e);
+      }
+    });
     this.getContentPane().setBackground(Color.white);
     jLabel2.setFont(new java.awt.Font("Dialog", 0, 11));
     jLabel2.setText("addresses:");
@@ -215,51 +197,47 @@ public class ACLAIDDialog extends JDialog {
     localCheckBox.setToolTipText("Select if the name is not a GUID.");
     localCheckBox.setBackground(Color.white);
     localCheckBox.setFont(new java.awt.Font("Dialog", 0, 11));
-    localCheckBox.addItemListener(
-      new java.awt.event.ItemListener() {
-        public void itemStateChanged(ItemEvent e) {
-          localCheckBox_itemStateChanged(e);
-        }
-      });
+    localCheckBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(ItemEvent e) {
+        localCheckBox_itemStateChanged(e);
+      }
+    });
     okButton.setBackground(Color.white);
     okButton.setFont(new java.awt.Font("Dialog", 0, 12));
     okButton.setText("ok");
-    okButton.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          okButton_actionPerformed(e);
-        }
-      });
+    okButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        okButton_actionPerformed(e);
+      }
+    });
     cancelButton.setBackground(Color.white);
     cancelButton.setFont(new java.awt.Font("Dialog", 0, 12));
     cancelButton.setText("cancel");
-    cancelButton.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          cancelButton_actionPerformed(e);
-        }
-      });
+    cancelButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        cancelButton_actionPerformed(e);
+      }
+    });
     buttonPanel.setBackground(Color.white);
-    this.getContentPane().add(nameTextField, new GridBagConstraints(2, 0, 1, 1, 1.0, 0.0
-      , GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-    this.getContentPane().add(addressesList, new GridBagConstraints(2, 1, 2, 1, 1.0, 1.0
-      , GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-    this.getContentPane().add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0
-      , GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-    this.getContentPane().add(jLabel2, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0
-      , GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-    this.getContentPane().add(resolverList, new GridBagConstraints(2, 2, 2, 1, 1.0, 1.0
-      , GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-    this.getContentPane().add(jLabel3, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0
-      , GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-    this.getContentPane().add(buttonPanel, new GridBagConstraints(0, 3, 4, 1, 1.0, 0.0
-      , GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+    this.getContentPane().add(nameTextField, new GridBagConstraints(2, 0, 1, 1, 1.0, 0.0,
+        GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+    this.getContentPane().add(addressesList, new GridBagConstraints(2, 1, 2, 1, 1.0, 1.0,
+        GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+    this.getContentPane().add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+        GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+    this.getContentPane().add(jLabel2, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
+        GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+    this.getContentPane().add(resolverList, new GridBagConstraints(2, 2, 2, 1, 1.0, 1.0,
+        GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+    this.getContentPane().add(jLabel3, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0,
+        GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+    this.getContentPane().add(buttonPanel, new GridBagConstraints(0, 3, 4, 1, 1.0, 0.0,
+        GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
     buttonPanel.add(okButton, null);
     buttonPanel.add(cancelButton, null);
-    this.getContentPane().add(localCheckBox, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0
-      , GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+    this.getContentPane().add(localCheckBox, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+        GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
   }
-
 
   public JCheckBox localCheckBox = new JCheckBox();
 
@@ -282,4 +260,4 @@ public class ACLAIDDialog extends JDialog {
   private Agent agent;
   private jade.core.AID itsAID;
 }
-//  ***EOF***
+// ***EOF***

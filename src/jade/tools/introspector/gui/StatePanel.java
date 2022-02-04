@@ -1,29 +1,23 @@
 /*****************************************************************
-JADE - Java Agent DEvelopment Framework is a framework to develop 
-multi-agent systems in compliance with the FIPA specifications.
-Copyright (C) 2000 CSELT S.p.A. 
-
-GNU Lesser General Public License
-
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation, 
-version 2.1 of the License. 
-
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the
-Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-Boston, MA  02111-1307, USA.
-*****************************************************************/
-
+ * JADE - Java Agent DEvelopment Framework is a framework to develop multi-agent systems in
+ * compliance with the FIPA specifications. Copyright (C) 2000 CSELT S.p.A.
+ * 
+ * GNU Lesser General Public License
+ * 
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, version 2.1 of
+ * the License.
+ * 
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ *****************************************************************/
 
 package jade.tools.introspector.gui;
-
 
 import java.awt.*;
 
@@ -34,20 +28,17 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-
 import jade.core.Agent;
 import jade.core.AgentState;
 import jade.core.mobility.AgentMobilityService;
 
 /**
-   This is a panel, with a top part containing state
-   buttons and a bottom part containing some action buttons. It
-   allows to manage the state of an agent.
-
-   @author Giovanni Rimassa, Andrea Squeri, Corti Denis, Ballestracci
-   Paolo - Universita` di Parma
-
-*/
+ * This is a panel, with a top part containing state buttons and a bottom part containing some
+ * action buttons. It allows to manage the state of an agent.
+ * 
+ * @author Giovanni Rimassa, Andrea Squeri, Corti Denis, Ballestracci Paolo - Universita` di Parma
+ * 
+ */
 public class StatePanel extends JPanel {
 
   private int state;
@@ -74,24 +65,26 @@ public class StatePanel extends JPanel {
 
   private Map ledMap = new HashMap();
 
-  public StatePanel(MainBarListener list){
+  public StatePanel(MainBarListener list) {
     super();
     leds = new ButtonGroup();
     listener = list;
     build();
   }
 
-  public void build(){
+  public void build() {
     Border line = BorderFactory.createEtchedBorder();
     JPanel ledPanel = new JPanel();
     ledPanel.setLayout(new BoxLayout(ledPanel, BoxLayout.Y_AXIS));
     ledPanel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
-    ledPanel.setBorder(BorderFactory.createTitledBorder(line, "Current State", TitledBorder.CENTER, TitledBorder.TOP, new Font("Dialog", Font.BOLD, 10)));
+    ledPanel.setBorder(BorderFactory.createTitledBorder(line, "Current State", TitledBorder.CENTER,
+        TitledBorder.TOP, new Font("Dialog", Font.BOLD, 10)));
 
     JPanel buttonPanel = new JPanel();
     buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
     buttonPanel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
-    buttonPanel.setBorder(BorderFactory.createTitledBorder(line, "Change State", TitledBorder.CENTER, TitledBorder.TOP, new Font("Dialog", Font.BOLD, 10)));
+    buttonPanel.setBorder(BorderFactory.createTitledBorder(line, "Change State",
+        TitledBorder.CENTER, TitledBorder.TOP, new Font("Dialog", Font.BOLD, 10)));
 
     activeLed = new JRadioButton("Active", ledOff);
     activeLed.setFont(myFont);
@@ -179,13 +172,12 @@ public class StatePanel extends JPanel {
     add(ledPanel);
     add(Box.createVerticalStrut(10));
     add(buttonPanel);
-    
 
   }
 
   public void switchTo(AgentState as) {
-    JRadioButton led = (JRadioButton)ledMap.get(as);
-    if(led != null)
+    JRadioButton led = (JRadioButton) ledMap.get(as);
+    if (led != null)
       led.setSelected(true);
   }
 
@@ -200,7 +192,7 @@ public class StatePanel extends JPanel {
     but.setBorder(BorderFactory.createEmptyBorder());
     but.setAlignmentX(JButton.LEFT_ALIGNMENT);
     but.setFont(myFont);
-    but.addActionListener(listener);    
+    but.addActionListener(listener);
   }
 
 }

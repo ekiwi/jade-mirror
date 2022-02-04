@@ -1,28 +1,24 @@
 /******************************************************************
- * JADE - Java Agent DEvelopment Framework is a framework to develop
- * multi-agent systems in compliance with the FIPA specifications.
- * Copyright (C) 2002 TILAB S.p.A.
+ * JADE - Java Agent DEvelopment Framework is a framework to develop multi-agent systems in
+ * compliance with the FIPA specifications. Copyright (C) 2002 TILAB S.p.A.
  *
  * This file is donated by Acklin B.V. to the JADE project.
  *
  *
  * GNU Lesser General Public License
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation,
- * version 2.1 of the License.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, version 2.1 of
+ * the License.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA  02111-1307, USA.
- * ***************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ ***************************************************************/
 package jade.tools.gui;
 
 import java.awt.*;
@@ -36,40 +32,36 @@ import javax.swing.JTextField;
 import javax.swing.border.*;
 
 /**
- *  The TimeChooser class can be used to let the user define a certain point
- *  in time by means of a dialog window. Used for for filling the reply-by
- *  attribute of an ACL.
+ * The TimeChooser class can be used to let the user define a certain point in time by means of a
+ * dialog window. Used for for filling the reply-by attribute of an ACL.
  *
- * @author     Giovanni Rimassa - Universita` di Parma, Chris van Aart -
- *      Acklin
- * @created    May 19, 2002
- * @version    $Date$ $Revision$
+ * @author Giovanni Rimassa - Universita` di Parma, Chris van Aart - Acklin
+ * @created May 19, 2002
+ * @version $Date$ $Revision$
  */
 
 public class ACLTimeChooserDialog implements ActionListener {
 
   /**
-   *  Constructor for the TimeChooserDialog object
+   * Constructor for the TimeChooserDialog object
    */
   public ACLTimeChooserDialog() {
     retVal = CANCEL;
     date = null;
   }
 
-
   /**
-   *  Constructor for the TimeChooserDialog object
+   * Constructor for the TimeChooserDialog object
    *
-   * @param  d  Description of Parameter
+   * @param d Description of Parameter
    */
   public ACLTimeChooserDialog(Date d) {
     retVal = CANCEL;
     date = d;
   }
 
-
   /**
-   * @param  args  The command line arguments
+   * @param args The command line arguments
    */
   public static void main(String[] args) {
     ACLTimeChooserDialog tc = new ACLTimeChooserDialog();
@@ -77,32 +69,29 @@ public class ACLTimeChooserDialog implements ActionListener {
     tc.showViewTimeDlg(null);
   }
 
-
   /**
-   *  Gets the Date attribute of the TimeChooserDialog object
+   * Gets the Date attribute of the TimeChooserDialog object
    *
-   * @return    The Date value
+   * @return The Date value
    */
   public Date getDate() {
     return (date);
   }
 
-
   /**
-   *  Sets the Date attribute of the TimeChooserDialog object
+   * Sets the Date attribute of the TimeChooserDialog object
    *
-   * @param  d  The new Date value
+   * @param d The new Date value
    */
   public void setDate(Date d) {
     date = d;
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    *
-   * @param  parent  Description of Parameter
-   * @return         Description of the Returned Value
+   * @param parent Description of Parameter
+   * @return Description of the Returned Value
    */
   public int showEditTimeDlg(JFrame parent) {
     Calendar cal;
@@ -111,21 +100,14 @@ public class ACLTimeChooserDialog implements ActionListener {
     dlg.setBackground(Color.white);
 
     /*
-        THIS PART IS RELATED TO THE EDITING OF RELATIVE TIMES (NOT YET IMPLEMENTED)
-        JPanel modePanel = new JPanel();
-        absButton = new JToggleButton("Absolute");
-        relButton = new JToggleButton("Relative");
-        relButton.setPreferredSize(absButton.getPreferredSize());
-        absButton.setSelected(true);
-        relButton.setSelected(false);
-        mode = ABSOLUTE;
-        absButton.addActionListener(this);
-        modePanel.add(absButton);
-        relButton.addActionListener(this);
-        modePanel.add(relButton);
-        dlg.getContentPane().add(modePanel);
-        dlg.getContentPane().add(Box.createVerticalStrut(5));
-      */
+     * THIS PART IS RELATED TO THE EDITING OF RELATIVE TIMES (NOT YET IMPLEMENTED) JPanel modePanel
+     * = new JPanel(); absButton = new JToggleButton("Absolute"); relButton = new
+     * JToggleButton("Relative"); relButton.setPreferredSize(absButton.getPreferredSize());
+     * absButton.setSelected(true); relButton.setSelected(false); mode = ABSOLUTE;
+     * absButton.addActionListener(this); modePanel.add(absButton);
+     * relButton.addActionListener(this); modePanel.add(relButton);
+     * dlg.getContentPane().add(modePanel); dlg.getContentPane().add(Box.createVerticalStrut(5));
+     */
     // Controls to set the time
     cal = new GregorianCalendar();
     if (date != null) {
@@ -134,7 +116,7 @@ public class ACLTimeChooserDialog implements ActionListener {
 
     JPanel timePanel = new JPanel();
     timePanel.setLayout(new GridLayout(2, 3));
-    ((GridLayout)(timePanel.getLayout())).setHgap(5);
+    ((GridLayout) (timePanel.getLayout())).setHgap(5);
     timePanel.setBackground(Color.white);
     year = new JTextField(4);
     year.setEditable(false);
@@ -187,14 +169,15 @@ public class ACLTimeChooserDialog implements ActionListener {
     dlg.setResizable(false);
     if (parent != null) {// Locate the dialog relatively to the parent
 
-      dlg.setLocation(parent.getX() + (parent.getWidth() - dlg.getWidth()) / 2, parent.getY() + (parent.getHeight() - dlg.getHeight()) / 2);
+      dlg.setLocation(parent.getX() + (parent.getWidth() - dlg.getWidth()) / 2,
+          parent.getY() + (parent.getHeight() - dlg.getHeight()) / 2);
     }
 
     else {// Locate the dialog relatively to the screen
 
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-      int centerX = (int)screenSize.getWidth() / 2;
-      int centerY = (int)screenSize.getHeight() / 2;
+      int centerX = (int) screenSize.getWidth() / 2;
+      int centerY = (int) screenSize.getHeight() / 2;
       dlg.setLocation(centerX - dlg.getWidth() / 2, centerY - dlg.getHeight() / 2);
     }
     dlg.setVisible(true);
@@ -202,11 +185,10 @@ public class ACLTimeChooserDialog implements ActionListener {
     return (retVal);
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    *
-   * @param  parent  Description of Parameter
+   * @param parent Description of Parameter
    */
   public void showViewTimeDlg(JFrame parent) {
     String s;
@@ -232,7 +214,7 @@ public class ACLTimeChooserDialog implements ActionListener {
     p.add(l);
     dlg.getContentPane().add(p);
 
-//    dlg.getContentPane().add(Box.createVerticalStrut(5));
+    // dlg.getContentPane().add(Box.createVerticalStrut(5));
 
     // Close button
     p = new JPanel();
@@ -250,24 +232,24 @@ public class ACLTimeChooserDialog implements ActionListener {
     dlg.setResizable(false);
     if (parent != null) {// Locate the dialog relatively to the parent
 
-      dlg.setLocation(parent.getX() + (parent.getWidth() - dlg.getWidth()) / 2, parent.getY() + (parent.getHeight() - dlg.getHeight()) / 2);
+      dlg.setLocation(parent.getX() + (parent.getWidth() - dlg.getWidth()) / 2,
+          parent.getY() + (parent.getHeight() - dlg.getHeight()) / 2);
     }
 
     else {// Locate the dialog relatively to the screen
 
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-      int centerX = (int)screenSize.getWidth() / 2;
-      int centerY = (int)screenSize.getHeight() / 2;
+      int centerX = (int) screenSize.getWidth() / 2;
+      int centerY = (int) screenSize.getHeight() / 2;
       dlg.setLocation(centerX - dlg.getWidth() / 2, centerY - dlg.getHeight() / 2);
     }
     dlg.setVisible(true);
   }
 
-
   /**
-   *  Description of the Method
+   * Description of the Method
    *
-   * @param  e  Description of Parameter
+   * @param e Description of Parameter
    */
   public void actionPerformed(ActionEvent e) {
     String command = e.getActionCommand();
@@ -291,17 +273,14 @@ public class ACLTimeChooserDialog implements ActionListener {
 
       retVal = OK;
       dlg.dispose();
-    }
-    else if (command.equals("Reset")) {
+    } else if (command.equals("Reset")) {
       date = null;
       retVal = OK;
       dlg.dispose();
-    }
-    else if (command.equals("Cancel")) {
+    } else if (command.equals("Cancel")) {
       retVal = CANCEL;
       dlg.dispose();
-    }
-    else if (command.equals("Close")) {
+    } else if (command.equals("Close")) {
       dlg.dispose();
     }
 
@@ -309,8 +288,7 @@ public class ACLTimeChooserDialog implements ActionListener {
       absButton.setSelected(true);
       relButton.setSelected(false);
       mode = ABSOLUTE;
-    }
-    else if (command.equals("Relative")) {
+    } else if (command.equals("Relative")) {
       relButton.setSelected(true);
       absButton.setSelected(false);
       mode = RELATIVE;
@@ -318,25 +296,19 @@ public class ACLTimeChooserDialog implements ActionListener {
 
   }
 
-
   /**
-   *  Adds a feature to the TimeUnitLine attribute of the TimeChooserDialog
-   *  object
+   * Adds a feature to the TimeUnitLine attribute of the TimeChooserDialog object
    *
-   * @param  tp             The feature to be added to the TimeUnitLine
-   *      attribute
-   * @param  timeUnit       The feature to be added to the TimeUnitLine
-   *      attribute
-   * @param  timeUnitEdit   The feature to be added to the TimeUnitLine
-   *      attribute
-   * @param  timeUnitLabel  The feature to be added to the TimeUnitLine
-   *      attribute
-   * @param  limit          The feature to be added to the TimeUnitLine
-   *      attribute
+   * @param tp The feature to be added to the TimeUnitLine attribute
+   * @param timeUnit The feature to be added to the TimeUnitLine attribute
+   * @param timeUnitEdit The feature to be added to the TimeUnitLine attribute
+   * @param timeUnitLabel The feature to be added to the TimeUnitLine attribute
+   * @param limit The feature to be added to the TimeUnitLine attribute
    */
-  private void addTimeUnitLine(JPanel tp, int timeUnit, final JTextField timeUnitEdit, final String timeUnitLabel, final int limit) {
+  private void addTimeUnitLine(JPanel tp, int timeUnit, final JTextField timeUnitEdit,
+      final String timeUnitLabel, final int limit) {
     JPanel up = new JPanel();
-    ((FlowLayout)(up.getLayout())).setHgap(0);
+    ((FlowLayout) (up.getLayout())).setHgap(0);
     up.setBackground(Color.white);
 
     JLabel l = new JLabel(timeUnitLabel);
@@ -348,32 +320,32 @@ public class ACLTimeChooserDialog implements ActionListener {
     JButton B1 = new JButton("+");
     B1.setBackground(Color.white);
     B1.setFont(new java.awt.Font("Dialog", 0, 11));
-    B1.addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          Integer i = new Integer(timeUnitEdit.getText());
-          int ii = i.intValue() + 1;
-          if (ii <= limit) {
-            timeUnitEdit.setText(String.valueOf(ii));
-          }
-
+    B1.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        Integer i = new Integer(timeUnitEdit.getText());
+        int ii = i.intValue() + 1;
+        if (ii <= limit) {
+          timeUnitEdit.setText(String.valueOf(ii));
         }
-      });
+
+      }
+    });
     JButton B2 = new JButton("-");
     B2.setBackground(Color.white);
     B2.setFont(new java.awt.Font("Dialog", 0, 11));
-    B2.addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          Integer i = new Integer(timeUnitEdit.getText());
-          int ii = i.intValue() - 1;
-          int inf_limit = (timeUnitLabel.equalsIgnoreCase("Hour:") || timeUnitLabel.equalsIgnoreCase("Min:") || timeUnitLabel.equalsIgnoreCase("Sec:") ? 0 : 1);
-          if (ii >= inf_limit) {
-            timeUnitEdit.setText(String.valueOf(ii));
-          }
-
+    B2.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        Integer i = new Integer(timeUnitEdit.getText());
+        int ii = i.intValue() - 1;
+        int inf_limit =
+            (timeUnitLabel.equalsIgnoreCase("Hour:") || timeUnitLabel.equalsIgnoreCase("Min:")
+                || timeUnitLabel.equalsIgnoreCase("Sec:") ? 0 : 1);
+        if (ii >= inf_limit) {
+          timeUnitEdit.setText(String.valueOf(ii));
         }
-      });
+
+      }
+    });
 
     B1.setMargin(new Insets(2, 4, 2, 4));
     B2.setMargin(new Insets(2, 4, 2, 4));
@@ -381,7 +353,7 @@ public class ACLTimeChooserDialog implements ActionListener {
     d.height = B1.getPreferredSize().height;
     d.width = (new JLabel("XXXXX")).getPreferredSize().width;
     l.setPreferredSize(d);
-    l.setAlignmentX((float)1);
+    l.setAlignmentX((float) 1);
     timeUnitEdit.setPreferredSize(new Dimension(50, d.height));
 
     up.add(l);
@@ -391,22 +363,21 @@ public class ACLTimeChooserDialog implements ActionListener {
     tp.add(up);
   }
 
-
   /**
-   *  Description of the Field
+   * Description of the Field
    */
   public final static int ABSOLUTE = 0;
   /**
-   *  Description of the Field
+   * Description of the Field
    */
   public final static int RELATIVE = 1;
 
   /**
-   *  Description of the Field
+   * Description of the Field
    */
   public final static int OK = 1;
   /**
-   *  Description of the Field
+   * Description of the Field
    */
   public final static int CANCEL = 0;
   JToggleButton absButton;
@@ -418,4 +389,4 @@ public class ACLTimeChooserDialog implements ActionListener {
   private JTextField year, month, day, hour, min, sec;
 
 }
-//  ***EOF***
+// ***EOF***

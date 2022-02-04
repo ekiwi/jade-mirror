@@ -3,27 +3,26 @@ package jade.domain.DFGUIManagement;
 import jade.domain.FIPAAgentManagement.FIPAManagementVocabulary;
 
 /**
-   
-   @author Elisabetta Cortese - TiLab S.p.A.
-   @version $Date$ $Revision$
-*/
+ * 
+ * @author Elisabetta Cortese - TiLab S.p.A.
+ * @version $Date$ $Revision$
+ */
 
 public interface DFAppletVocabulary extends FIPAManagementVocabulary {
-	
+
   /**
-    A symbolic constant, containing the name of this ontology.
+   * A symbolic constant, containing the name of this ontology.
    */
   public static final String NAME = "DFApplet-Management";
 
-
   // Action
-  public static final String GETDESCRIPTION= "getdescription";
+  public static final String GETDESCRIPTION = "getdescription";
 
-  //public static final String FEDERATEWITH = "federatewith";
+  // public static final String FEDERATEWITH = "federatewith";
   public static final String FEDERATE = "federate";
-  //public static final String FEDERATEWITH_PARENTDF = "parentdf";
+  // public static final String FEDERATEWITH_PARENTDF = "parentdf";
   public static final String FEDERATE_DF = "df";
-  //public static final String FEDERATEWITH_CHILDRENDF = "childrendf";
+  // public static final String FEDERATEWITH_CHILDRENDF = "childrendf";
   public static final String FEDERATE_DESCRIPTION = "description";
 
   public static final String REGISTERWITH = "registerwith";
@@ -31,9 +30,9 @@ public interface DFAppletVocabulary extends FIPAManagementVocabulary {
   public static final String REGISTERWITH_DESCRIPTION = "description";
 
   public static final String DEREGISTERFROM = "deregisterfrom";
-  //public static final String DEREGISTERFROM_PARENTDF = "parentdf";
+  // public static final String DEREGISTERFROM_PARENTDF = "parentdf";
   public static final String DEREGISTERFROM_DF = "df";
-  //public static final String DEREGISTERFROM_CHILDRENDF = "childrendf";
+  // public static final String DEREGISTERFROM_CHILDRENDF = "childrendf";
   public static final String DEREGISTERFROM_DESCRIPTION = "description";
 
   public static final String MODIFYON = "modifyon";

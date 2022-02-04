@@ -5,18 +5,13 @@ package jade.core.event;
  */
 public class ContainerAdapter implements ContainerListener {
 
-	public void bornAgent(ContainerEvent ev) {
-	}
+  public void bornAgent(ContainerEvent ev) {}
 
-	public void deadAgent(ContainerEvent ev) {
-	}
+  public void deadAgent(ContainerEvent ev) {}
 
-	public void leadershipAcquired(ContainerEvent ev) {
-	}
+  public void leadershipAcquired(ContainerEvent ev) {}
 
-	public void reattached(ContainerEvent ev) {
-	}
+  public void reattached(ContainerEvent ev) {}
 
-	public void reconnected(ContainerEvent ev) {
-	}
+  public void reconnected(ContainerEvent ev) {}
 }

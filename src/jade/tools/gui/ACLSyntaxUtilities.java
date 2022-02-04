@@ -1,28 +1,24 @@
 /******************************************************************
- * JADE - Java Agent DEvelopment Framework is a framework to develop
- * multi-agent systems in compliance with the FIPA specifications.
- * Copyright (C) 2002 TILAB S.p.A.
+ * JADE - Java Agent DEvelopment Framework is a framework to develop multi-agent systems in
+ * compliance with the FIPA specifications. Copyright (C) 2002 TILAB S.p.A.
  *
  * This file is donated by Acklin B.V. to the JADE project.
  *
  *
  * GNU Lesser General Public License
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation,
- * version 2.1 of the License.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, version 2.1 of
+ * the License.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA  02111-1307, USA.
- * ***************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ ***************************************************************/
 package jade.tools.gui;
 
 import java.awt.*;
@@ -30,25 +26,23 @@ import javax.swing.JComponent;
 import javax.swing.text.*;
 
 /**
- *  Class with several utility functions used by jEdit's syntax colorizing
- *  subsystem. The original file is written by Slava Pestov (www.gjt.org) and
- *  altered to fit ACL/SL.
+ * Class with several utility functions used by jEdit's syntax colorizing subsystem. The original
+ * file is written by Slava Pestov (www.gjt.org) and altered to fit ACL/SL.
  *
- * @author     Chris van Aart - Acklin B.V., the Netherlands & Slava Pestov
- * @created    June 14, 2002
+ * @author Chris van Aart - Acklin B.V., the Netherlands & Slava Pestov
+ * @created June 14, 2002
  */
 public class ACLSyntaxUtilities {
 
   // private members
-  private ACLSyntaxUtilities() { }
-
+  private ACLSyntaxUtilities() {}
 
   /**
-   *  Returns the default style table. This can be passed to the <code>setStyles()</code>
-   *  method of <code>SyntaxDocument</code> to use the default syntax styles.
+   * Returns the default style table. This can be passed to the <code>setStyles()</code> method of
+   * <code>SyntaxDocument</code> to use the default syntax styles.
    *
-   * @param  theComp  Description of Parameter
-   * @return          The DefaultSyntaxStyles value
+   * @param theComp Description of Parameter
+   * @return The DefaultSyntaxStyles value
    */
   public static ACLSytntaxStyle[] getDefaultSyntaxStyles(JComponent theComp) {
     ACLSytntaxStyle[] styles = new ACLSytntaxStyle[ACLToken.ID_COUNT];
@@ -67,18 +61,16 @@ public class ACLSyntaxUtilities {
     return styles;
   }
 
-
   /**
-   *  Checks if a subregion of a <code>Segment</code> is equal to a string.
+   * Checks if a subregion of a <code>Segment</code> is equal to a string.
    *
-   * @param  ignoreCase  True if case should be ignored, false otherwise
-   * @param  text        The segment
-   * @param  offset      The offset into the segment
-   * @param  match       The string to match
-   * @return             Description of the Returned Value
+   * @param ignoreCase True if case should be ignored, false otherwise
+   * @param text The segment
+   * @param offset The offset into the segment
+   * @param match The string to match
+   * @return Description of the Returned Value
    */
-  public static boolean regionMatches(boolean ignoreCase, Segment text,
-                                      int offset, String match) {
+  public static boolean regionMatches(boolean ignoreCase, Segment text, int offset, String match) {
     int length = offset + match.length();
     char[] textArray = text.array;
     if (length > text.offset + text.count) {
@@ -98,19 +90,16 @@ public class ACLSyntaxUtilities {
     return true;
   }
 
-
   /**
-   *  Checks if a subregion of a <code>Segment</code> is equal to a character
-   *  array.
+   * Checks if a subregion of a <code>Segment</code> is equal to a character array.
    *
-   * @param  ignoreCase  True if case should be ignored, false otherwise
-   * @param  text        The segment
-   * @param  offset      The offset into the segment
-   * @param  match       The character array to match
-   * @return             Description of the Returned Value
+   * @param ignoreCase True if case should be ignored, false otherwise
+   * @param text The segment
+   * @param offset The offset into the segment
+   * @param match The character array to match
+   * @return Description of the Returned Value
    */
-  public static boolean regionMatches(boolean ignoreCase, Segment text,
-                                      int offset, char[] match) {
+  public static boolean regionMatches(boolean ignoreCase, Segment text, int offset, char[] match) {
     int length = offset + match.length;
     char[] textArray = text.array;
     if (length > text.offset + text.count) {
@@ -130,28 +119,26 @@ public class ACLSyntaxUtilities {
     return true;
   }
 
-
   /**
-   *  Paints the specified line onto the graphics context. Note that this
-   *  method munges the offset and count values of the segment.
+   * Paints the specified line onto the graphics context. Note that this method munges the offset
+   * and count values of the segment.
    *
-   * @param  line      The line segment
-   * @param  tokens    The token list for the line
-   * @param  styles    The syntax style list
-   * @param  expander  The tab expander used to determine tab stops. May be
-   *      null
-   * @param  gfx       The graphics context
-   * @param  x         The x co-ordinate
-   * @param  y         The y co-ordinate
-   * @return           The x co-ordinate, plus the width of the painted string
+   * @param line The line segment
+   * @param tokens The token list for the line
+   * @param styles The syntax style list
+   * @param expander The tab expander used to determine tab stops. May be null
+   * @param gfx The graphics context
+   * @param x The x co-ordinate
+   * @param y The y co-ordinate
+   * @return The x co-ordinate, plus the width of the painted string
    */
-  public static int paintSyntaxLine(Segment line, ACLToken tokens, ACLSytntaxStyle[] styles, TabExpander expander, Graphics gfx,
-                                    int x, int y) {
+  public static int paintSyntaxLine(Segment line, ACLToken tokens, ACLSytntaxStyle[] styles,
+      TabExpander expander, Graphics gfx, int x, int y) {
     Font defaultFont = gfx.getFont();
     Color defaultColor = gfx.getColor();
 
     int offset = 0;
-    for (; ; ) {
+    for (;;) {
       byte id = tokens.id;
       if (id == ACLToken.END) {
         break;
@@ -167,8 +154,7 @@ public class ACLSyntaxUtilities {
           gfx.setFont(defaultFont);
         }
 
-      }
-      else {
+      } else {
         styles[id].setGraphicsFlags(gfx, defaultFont);
       }
 
@@ -183,4 +169,4 @@ public class ACLSyntaxUtilities {
     return x;
   }
 }
-//  ***EOF***
+// ***EOF***

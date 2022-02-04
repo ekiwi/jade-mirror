@@ -6,7 +6,5 @@ package examples.O2AInterface;
  * @author Giovanni Iavarone - Michele Izzo
  */
 public interface CounterManager1 {
-	public void activateCounter();
+  public void activateCounter();
 }
-
-
