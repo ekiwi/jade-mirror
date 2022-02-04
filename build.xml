@@ -240,7 +240,7 @@ ant dist - to create the distribution files
        Demo
        _______________________________________________ -->
   <target name="demo" depends="lib" description="compile the demo">
-    <javac srcdir="${src}" destdir="${build}" nowarn="off" optimize="${javac.optimize}" debug="${javac.debug}" deprecation="off" includes="demo/**" classpath="${lib}/jade.jar,${root}/demo/CalendarBean.jar"/>
+    <javac srcdir="${src}" destdir="${build}" nowarn="off" optimize="${javac.optimize}" debug="${javac.debug}" deprecation="off" includes="demo/**" classpath="${lib}/jade.jar:${root}/3rdparty-libs/com.toedter/CalendarBean.jar"/>
     <delete file="${demo}/MeetingScheduler.jar" quiet="true"/>
     <jar jarfile="${demo}/MeetingScheduler.jar" manifest="${demo}/demo.mf">
       <fileset dir="${build}" includes="**/demo/**"/>
