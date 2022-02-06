@@ -63,6 +63,7 @@ tasks.named('jar') {
 	include "**/*.jpg"
     }
     manifest {
+        attributes('Main-Class': 'jade.Boot')
         attributes('Built-By': "Jade Team (" + System.properties['user.name'] + ")")
         attributes('Build-Date': getDateTime())
         attributes([ 'Specification-Version': version ], 'Jade Informations')
