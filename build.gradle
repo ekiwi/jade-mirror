@@ -4,6 +4,14 @@
 
 plugins {
     id 'jade.java-application-conventions'
+    id "com.palantir.git-version" version "0.13.0"
+}
+
+/* update this if Jade got new stuff */
+version='4.3.3'
+
+def getDateTime() {
+    return new Date().format('yyyy-MM-dd-HH:mm:ss')
 }
 
 repositories {
@@ -27,6 +35,21 @@ sourceSets {
 	java {
 	    srcDirs = [ 'src/FIPA', 'src/demo', 'src/jade' ]
 	}
+    }
+}
+
+tasks.named('jar') {
+    from('src') {
+	include "**/*.gif"
+	include "**/*.png"
+	include "**/*.jpg"
+    }
+    manifest {
+        attributes('Built-By': "Jade Team (" + System.properties['user.name'] + ")")
+        attributes('Build-Date': getDateTime())
+        attributes([ 'Specification-Version': version ], 'Jade Informations')
+        attributes([ 'SVN-Revision': gitVersion() ], 'Jade Informations')
+        attributes([ 'SVN-Date': getDateTime() ], 'Jade Informations')
     }
 }
 
