@@ -5,6 +5,7 @@
 plugins {
     id 'jade.java-application-conventions'
     id "com.palantir.git-version" version "0.13.0"
+    id "com.intershop.gradle.javacc" version "4.0.1"
 }
 
 /* update this if Jade got new stuff */
@@ -17,6 +18,23 @@ def getDateTime() {
 repositories {
     flatDir {
 	dirs '3rdparty-libs/com.toedter'
+    }
+}
+
+javacc {
+    configs {
+        template {
+            inputFile = file('src/jade/lang/acl/ACLParser.jj')
+            packageName = 'jade.lang.acl'
+        }
+        template {
+            inputFile = file('src/jade/content/lang/sl/SLParser.jj')
+            packageName = 'jade.content.lang.sl'
+        }
+        template {
+            inputFile = file('src/jade/content/lang/sl/ExtendedSLParser.jj')
+            packageName = 'jade.content.lang.sl'
+        }
     }
 }
 
